@@ -16,6 +16,8 @@ function Provider({ children }) {
       }
     };
     validateLogin();
+    localStorage.setItem('mealsToken', '1');
+    localStorage.setItem('cocktailsToken', '1');
   }, [email, password]);
 
   const contextValue = {
