@@ -3,7 +3,28 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
-  const contextValue = {};
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  useEffect(() => {
+    const validateLogin = () => {
+      const MIN = 7;
+      const validate = ((password.length >= MIN) && (/\S+@\S+\.\S+/.test(email)));
+      if (validate) {
+        setBtnDisabled(false);
+      }
+    };
+    validateLogin();
+  }, [email, password]);
+
+  const contextValue = {
+    email,
+    password,
+    setEmail,
+    setPassword,
+    btnDisabled,
+  };
   return (
     <Context.Provider value={ contextValue }>
       {children}
