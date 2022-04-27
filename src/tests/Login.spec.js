@@ -8,7 +8,7 @@ const EMAIL_TEST_ID = 'email-input';
 const PASSWORD_TEST_ID = 'password-input';
 const BTN_TEST_ID = 'login-submit-btn';
 const STANDARD_EMAIL = 'test@test.com';
-const STANDARD_PASSWORD = '123456';
+const STANDARD_PASSWORD = '1234567';
 
 beforeEach(() => {
   renderWithRouter(<App />);
@@ -81,7 +81,7 @@ describe('2 - Testando validação de formulário na tela de Login', () => {
 
     expect(enterBtn).not.toBeDisabled();
 
-    userEvent.type(inputPassword, '12345');
+    userEvent.type(inputPassword, '123456');
     // O teste não reconhecer o {backspace} para input de type=password aparentemente
     expect(enterBtn).toBeDisabled();
   });
