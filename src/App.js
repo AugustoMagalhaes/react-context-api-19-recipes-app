@@ -19,34 +19,34 @@ import FavoriteRecipesScreen from './pages/FavoriteRecipes';
 function App() {
   return (
     <Provider>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/favorite-recipes" component={ FavoriteRecipesScreen } />
-        <Route exact path="/done-recipes" component={ DoneRecipesScreen } />
-        <Route exact path="/profile" component={ ProfileScreen } />
-        <Route
-          exact
-          path="/explore/nationalities"
-          component={ ExploreNationalitiesScreen }
-        />
-        <Route
-          exact
-          path="/explore/drinks/ingredients"
-          component={ ExploreDrinksIngScreen }
-        />
-        <Route
-          exact
-          path="/explore/foods/ingredients"
-          component={ ExploreFoodsIngScreen }
-        />
-        <Route exact path="/explore/drinks" component={ ExploreDrinksScreen } />
-        <Route exact path="/explore/foods" component={ ExploreFoodsScreen } />
-        <Route exact path="/explore" component={ ExploreScreen } />
-        <Route exact path="/foods" component={ FoodsScreen } />
-        <Route exact path="/drinks" component={ DrinksScreen } />
-        <Route exact path="/" component={ LoginScreen } />
-      </Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/favorite-recipes" component={ FavoriteRecipesScreen } />
+          <Route exact path="/done-recipes" component={ DoneRecipesScreen } />
+          <Route exact path="/profile" component={ ProfileScreen } />
+          <Route
+            exact
+            path="/explore/nationalities"
+            component={ ExploreNationalitiesScreen }
+          />
+          <Route
+            exact
+            path="/explore/drinks/ingredients"
+            component={ ExploreDrinksIngScreen }
+          />
+          <Route
+            exact
+            path="/explore/foods/ingredients"
+            component={ ExploreFoodsIngScreen }
+          />
+          <Route exact path="/explore/drinks" component={ ExploreDrinksScreen } />
+          <Route exact path="/explore/foods" component={ ExploreFoodsScreen } />
+          <Route exact path="/explore" component={ ExploreScreen } />
+          <Route exact path="/foods" component={ FoodsScreen } />
+          <Route exact path="/drinks" component={ DrinksScreen } />
+          <Route exact path="/" component={ LoginScreen } />
+        </Switch>
+      </BrowserRouter>
     </Provider>
   );
 }
