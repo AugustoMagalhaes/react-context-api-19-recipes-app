@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/profile" component={ ProfileScreen } />
           <Route
             exact
-            path="/explore/nationalities"
+            path="/explore/foods/nationalities"
             component={ ExploreNationalitiesScreen }
           />
           <Route
