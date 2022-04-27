@@ -9,7 +9,7 @@ function Provider({ children }) {
 
   useEffect(() => {
     const validateLogin = () => {
-      const MIN = 6;
+      const MIN = 7;
       const validate = ((password.length >= MIN) && (/\S+@\S+\.\S+/.test(email)));
       /* Logica para alterar o disable de acordo com o oposto
         do booleano de validate */
