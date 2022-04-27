@@ -9,11 +9,11 @@ function Provider({ children }) {
 
   useEffect(() => {
     const validateLogin = () => {
-      const MIN = 7;
+      const MIN = 6;
       const validate = ((password.length >= MIN) && (/\S+@\S+\.\S+/.test(email)));
-      if (validate) {
-        setBtnDisabled(false);
-      }
+      /* Logica para alterar o disable de acordo com o oposto
+        do booleano de validate */
+      setBtnDisabled(!validate);
     };
     validateLogin();
     localStorage.setItem('mealsToken', '1');
