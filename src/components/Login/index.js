@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 import './Login.css';
 
@@ -10,6 +11,15 @@ function Login() {
     setPassword,
     btnDisabled,
   } = useContext(Context);
+
+  const history = useHistory();
+
+  const redirectFromLogin = () => {
+    localStorage.setItem('mealsToken', '1');
+    localStorage.setItem('cocktailsToken', '1');
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/foods');
+  };
 
   const inputChangeEmail = ({ target }) => {
     setEmail(target.value);
@@ -43,7 +53,7 @@ function Login() {
           data-testid="login-submit-btn"
           type="button"
           disabled={ btnDisabled }
-
+          onClick={ redirectFromLogin }
         >
           Enter
         </button>

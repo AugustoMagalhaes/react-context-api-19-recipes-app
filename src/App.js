@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import LoginScreen from './pages/Login/Login';
+import Provider from './context/Provider';
 import FoodsScreen from './pages/Foods';
 import DrinksScreen from './pages/Drinks';
 import ExploreScreen from './pages/Explore';
@@ -17,6 +18,7 @@ import FavoriteRecipesScreen from './pages/FavoriteRecipes';
 
 function App() {
   return (
+    <Provider>
     <BrowserRouter>
       <Switch>
         <Route exact path="/favorite-recipes" component={ FavoriteRecipesScreen } />
@@ -45,6 +47,7 @@ function App() {
         <Route exact path="/" component={ LoginScreen } />
       </Switch>
     </BrowserRouter>
+    </Provider>
   );
 }
 
