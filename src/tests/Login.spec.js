@@ -4,15 +4,19 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
 
-beforeEach(() => {
-  renderWithRouter(<App />);
-});
-
 const EMAIL_TEST_ID = 'email-input';
 const PASSWORD_TEST_ID = 'password-input';
 const BTN_TEST_ID = 'login-submit-btn';
 const STANDARD_EMAIL = 'test@test.com';
 const STANDARD_PASSWORD = '123456';
+
+beforeEach(() => {
+  renderWithRouter(<App />);
+});
+
+afterEach(() => {
+  localStorage.clear();
+});
 
 describe('1 - Testando inputs da tela de Login', () => {
   it('2 - Criando elementos de interação em Login', () => {
@@ -84,5 +88,33 @@ describe('2 - Testando validação de formulário na tela de Login', () => {
 });
 
 describe('3 - Testando criação de chaves no localStorage ao fazer login', () => {
+  beforeEach(() => {
+    const inputEmail = screen.getByTestId(EMAIL_TEST_ID);
+    const inputPassword = screen.getByTestId(PASSWORD_TEST_ID);
+    userEvent.type(inputEmail, STANDARD_EMAIL);
+    userEvent.type(inputPassword, STANDARD_PASSWORD);
+  });
 
+  it('6 - Salvando 2 tokens no localStorage', () => {
+    expect(localStorage.getItem('mealsToken')).toBe('1'); // *
+    expect(localStorage.getItem('mealsToken')).toBeDefined();
+    expect(localStorage.getItem('cocktailsToken')).toBe('1'); // talvez mude
+    expect(localStorage.getItem('cocktailsToken')).toBeDefined();
+  });
+
+  it('7 - Salvando email da pessoa no localStorage', () => {
+    const userFromStorage = JSON.parse(localStorage.getItem('user'));
+    const expectedUserFromStorage = { email: STANDARD_EMAIL };
+    expect(userFromStorage).toEqual(expectedUserFromStorage);
+  });
+});
+
+describe('4 - Redirecionamento do login apos submissao dos dados', () => {
+  it('8 - Redirecionando a pessoa para a tela principal de receitas após a '
+    + 'submissão e validação de sucesso do login', () => {
+    const enterBtn = screen.getByTestId(BTN_TEST_ID);
+    expect(window.location.pathname).toBe('/');
+    userEvent.click(enterBtn);
+    expect(window.location.pathname).toBe('/foods');
+  });
 });
