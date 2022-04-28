@@ -1,0 +1,17 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  align-items: center;
+  background-color: #e5e5e5;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+header img {
+  width: 50px;
+}

@@ -1,0 +1,22 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  justify-content: center;
+}
+
+form input, button {
+  margin-top: 20px;
+}
+
+form button {
+  border-radius: 5px;
+  width: 100px;
+}

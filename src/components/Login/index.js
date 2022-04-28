@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
+import './Login.css';
 
 function Login() {
   const {
@@ -31,6 +32,7 @@ function Login() {
   return (
     <section>
       <form>
+        <h2>Login</h2>
         <input
           data-testid="email-input"
           name="email"
