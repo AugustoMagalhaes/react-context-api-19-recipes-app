@@ -16,9 +16,6 @@ function Provider({ children }) {
       setBtnDisabled(!validate);
     };
     validateLogin();
-    localStorage.setItem('mealsToken', '1');
-    localStorage.setItem('cocktailsToken', '1');
-    localStorage.setItem('user', JSON.stringify({ email }));
   }, [email, password]);
 
   const contextValue = {
