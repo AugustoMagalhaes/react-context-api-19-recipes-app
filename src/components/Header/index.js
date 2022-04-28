@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import profile from '../../images/profileIcon.svg';
 import search from '../../images/searchIcon.svg';
 import './Header.css';
 
 function Header({ pageTitle, hasSearch }) {
+  useEffect(() => {
+    document.title = pageTitle;
+  });
+
+  const cursorStyle = window.location.pathname === '/profile' ? 'auto' : 'pointer';
+
   return (
     <header>
-      <img
-        src={ profile }
-        alt="Icone do Perfil"
-        data-testid="profile-top-btn"
-      />
+      <Link
+        style={ { cursor: cursorStyle } }
+        to="/profile"
+      >
+        <img
+          src={ profile }
+          alt="Icone do Perfil"
+          data-testid="profile-top-btn"
+        />
+      </Link>
+
       <h1 data-testid="page-title">{ pageTitle }</h1>
       {hasSearch
         ? (
