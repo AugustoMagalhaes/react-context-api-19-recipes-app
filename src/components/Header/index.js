@@ -44,12 +44,50 @@ function Header({ pageTitle, hasSearch }) {
             </button>
             {
               displaySearchBar && (
-                <input
-                  type="text"
-                  data-testid="search-input"
-                  placeholder="Pesquise uma comida ou bebida"
-                  size="30"
-                />
+                <section>
+                  <input
+                    type="text"
+                    data-testid="search-input"
+                    placeholder="Pesquise uma comida ou bebida"
+                    size="30"
+                  />
+                  <label htmlFor="search-radio">
+                    Ingrediente:
+                    <input
+                      type="radio"
+                      name="search-radio"
+                      id="search-radio"
+                      data-testid="ingredient-search-radio"
+                    />
+                  </label>
+
+                  <label htmlFor="search-radio">
+                    Nome:
+                    <input
+                      type="radio"
+                      name="search-radio"
+                      id="search-radio"
+                      data-testid="name-search-radio"
+                    />
+                  </label>
+
+                  <label htmlFor="search-radio">
+                    Primeira Letra:
+                    <input
+                      type="radio"
+                      name="search-radio"
+                      id="search-radio"
+                      data-testid="first-letter-search-radio"
+                    />
+                  </label>
+
+                  <button
+                    type="button"
+                    data-testid="exec-search-btn"
+                  >
+                    Buscar
+                  </button>
+                </section>
               )
             }
           </>
