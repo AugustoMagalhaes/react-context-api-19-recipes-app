@@ -15,3 +15,8 @@ header {
 header img {
   width: 50px;
 }
+
+.teste {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+  border: none;
+}
