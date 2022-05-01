@@ -1,9 +1,7 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import Header from '../components/Header';
-import LoginScreen from '../pages/Login/Login';
 import renderWithRouter from './helpers/renderWithRouter';
 
 const EMAIL_TEST_ID = 'email-input';
