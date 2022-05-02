@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import profile from '../../images/profileIcon.svg';
 import search from '../../images/searchIcon.svg';
 import './Header.css';
+import SearchBar from '../SearchBar.js';
 
 function Header({ pageTitle, hasSearch }) {
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
@@ -30,10 +31,10 @@ function Header({ pageTitle, hasSearch }) {
       <h1 data-testid="page-title">{ pageTitle }</h1>
       {hasSearch
         ? (
-          <>
+          <section>
             <button
               type="button"
-              className="teste"
+              className="search-btn"
               onClick={ () => setDisplaySearchBar(!displaySearchBar) }
             >
               <img
@@ -42,56 +43,10 @@ function Header({ pageTitle, hasSearch }) {
                 data-testid="search-top-btn"
               />
             </button>
-            {
-              displaySearchBar && (
-                <section>
-                  <input
-                    type="text"
-                    data-testid="search-input"
-                    placeholder="Pesquise uma comida ou bebida"
-                    size="30"
-                  />
-                  <label htmlFor="search-radio">
-                    Ingrediente:
-                    <input
-                      type="radio"
-                      name="search-radio"
-                      id="search-radio"
-                      data-testid="ingredient-search-radio"
-                    />
-                  </label>
-
-                  <label htmlFor="search-radio">
-                    Nome:
-                    <input
-                      type="radio"
-                      name="search-radio"
-                      id="search-radio"
-                      data-testid="name-search-radio"
-                    />
-                  </label>
-
-                  <label htmlFor="search-radio">
-                    Primeira Letra:
-                    <input
-                      type="radio"
-                      name="search-radio"
-                      id="search-radio"
-                      data-testid="first-letter-search-radio"
-                    />
-                  </label>
-
-                  <button
-                    type="button"
-                    data-testid="exec-search-btn"
-                  >
-                    Buscar
-                  </button>
-                </section>
-              )
-            }
-          </>
+            <SearchBar displaySearchBar={ displaySearchBar } />
+          </section>
         ) : null }
+
       {/*
         profile não tem lupa
         done recipes não tem lupa
