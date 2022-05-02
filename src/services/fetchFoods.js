@@ -1,7 +1,7 @@
 export const getFoodsByName = async (name) => {
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
   const response = await fetch(url);
-  const data = response.json();
+  const data = await response.json();
   const { meals } = data;
   return meals;
 };
@@ -9,7 +9,7 @@ export const getFoodsByName = async (name) => {
 export const getFoodsByIngredient = async (ingredient) => {
   const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
   const response = await fetch(url);
-  const data = response.json();
+  const data = await response.json();
   const { meals } = data;
   return meals;
 };
@@ -29,7 +29,7 @@ export const getFoodsByFirsLetter = async (firstLetter) => {
   }
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
   const response = await fetch(url);
-  const data = response.json();
-  const { meals } = data;
-  return meals;
+  const data = await response.json();
+  // const { meals } = data;
+  return data;
 };

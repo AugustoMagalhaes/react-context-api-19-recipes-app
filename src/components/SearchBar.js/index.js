@@ -1,21 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import { getFoodsByIngredient, getFoodsByName, getFoodsByFirsLetter }
 from '../../services/fetchFoods';
+import { getCocktailsByName, getCocktailsByIngredient, getCocktailsByFirstLetter }
+from '../../services/fetchCocktails';
+import Context from '../../context/Context';
 
 export default function SearchBar({ displaySearchBar }) {
   const [searchInput, setSearchInput] = useState('');
   const [searchRadio, setSearchRadio] = useState('ingredient');
+  const { setReceivedDrinks, setReceivedFoods } = useContext(Context);
+  const location = useLocation();
   const getFoods = async () => {
     // tentar otimizar esses if's; o return é temporario por enquanto
     if (searchRadio === 'name') {
-      return getFoodsByName(searchInput);
+      const receivedProducts = await getFoodsByName(searchInput);
+      setReceivedFoods(receivedProducts);
     }
     if (searchRadio === 'ingredient') {
-      return getFoodsByIngredient(searchInput);
+      const receivedProducts = await getFoodsByIngredient(searchInput);
+      setReceivedFoods(receivedProducts);
     }
     if (searchRadio === 'firstLetter') {
-      return getFoodsByFirsLetter(searchInput);
+      const receivedProducts = await getFoodsByFirsLetter(searchInput);
+      setReceivedFoods(receivedProducts);
+    }
+  };
+
+  const getDrinks = async () => {
+    if (searchRadio === 'name') {
+      const receivedProducts = await getCocktailsByName(searchInput);
+      setReceivedDrinks(receivedProducts);
+    }
+    if (searchRadio === 'ingredient') {
+      const receivedProducts = await getCocktailsByIngredient(searchInput);
+      setReceivedDrinks(receivedProducts);
+    }
+    if (searchRadio === 'firstLetter') {
+      const receivedProducts = await getCocktailsByFirstLetter(searchInput);
+      setReceivedDrinks(receivedProducts);
+    }
+  };
+
+  const getProducts = async () => {
+    const { pathname } = location;
+    console.log(pathname);
+    if (pathname === '/drinks') {
+      return getDrinks();
+    }
+    if (pathname === '/foods') {
+      return getFoods();
     }
   };
 
@@ -33,7 +68,7 @@ export default function SearchBar({ displaySearchBar }) {
         <button
           type="button"
           data-testid="exec-search-btn"
-          onClick={ getFoods }
+          onClick={ getProducts }
         >
           Search
         </button>

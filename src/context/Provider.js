@@ -6,6 +6,8 @@ function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [receivedDrinks, setReceivedDrinks] = useState([]);
+  const [receivedFoods, setReceivedFoods] = useState([]);
 
   useEffect(() => {
     const validateLogin = () => {
@@ -19,6 +21,10 @@ function Provider({ children }) {
   }, [email, password]);
 
   const contextValue = {
+    receivedDrinks,
+    setReceivedDrinks,
+    receivedFoods,
+    setReceivedFoods,
     email,
     password,
     setEmail,
