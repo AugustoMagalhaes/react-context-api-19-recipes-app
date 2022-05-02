@@ -10,7 +10,8 @@ import Context from '../../context/Context';
 export default function SearchBar({ displaySearchBar }) {
   const [searchInput, setSearchInput] = useState('');
   const [searchRadio, setSearchRadio] = useState('ingredient');
-  const { setReceivedDrinks, setReceivedFoods } = useContext(Context);
+  const {
+    setReceivedDrinks, setReceivedFoods } = useContext(Context);
   const location = useLocation();
   const getFoods = async () => {
     // tentar otimizar esses if's; o return é temporario por enquanto
@@ -24,7 +25,9 @@ export default function SearchBar({ displaySearchBar }) {
     }
     if (searchRadio === 'firstLetter') {
       const receivedProducts = await getFoodsByFirsLetter(searchInput);
-      setReceivedFoods(receivedProducts);
+      if (receivedProducts) {
+        setReceivedFoods(receivedProducts);
+      }
     }
   };
 
@@ -39,18 +42,19 @@ export default function SearchBar({ displaySearchBar }) {
     }
     if (searchRadio === 'firstLetter') {
       const receivedProducts = await getCocktailsByFirstLetter(searchInput);
-      setReceivedDrinks(receivedProducts);
+      if (receivedProducts) {
+        setReceivedDrinks(receivedProducts);
+      }
     }
   };
 
   const getProducts = async () => {
     const { pathname } = location;
-    console.log(pathname);
     if (pathname === '/drinks') {
-      return getDrinks();
+      getDrinks();
     }
     if (pathname === '/foods') {
-      return getFoods();
+      getFoods();
     }
   };
 
