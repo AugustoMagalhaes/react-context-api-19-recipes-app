@@ -7,6 +7,7 @@ function FilterDrinks() {
     setReceivedCategoryDrinks,
     setReceivedDrinks,
     setSearchDrinksByCategory,
+    searchDrinksByCategory,
   } = useContext(Context);
   const maxFilter = 5;
 
@@ -22,12 +23,22 @@ function FilterDrinks() {
   }, []);
 
   const filterButton = async (category) => {
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const { drinks } = data;
-    setReceivedDrinks(drinks);
-    setSearchDrinksByCategory(true);
+    if (searchDrinksByCategory === false) {
+      setSearchDrinksByCategory(true);
+      const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const { drinks } = data;
+      setReceivedDrinks(drinks);
+    }
+    if (searchDrinksByCategory === true) {
+      setSearchDrinksByCategory(false);
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const data = await response.json();
+      const { drinks } = data;
+      setReceivedDrinks(drinks);
+    }
   };
 
   return (

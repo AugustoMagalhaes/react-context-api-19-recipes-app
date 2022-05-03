@@ -7,6 +7,7 @@ function FilterFoods() {
     setReceivedCategoryFoods,
     setReceivedFoods,
     setSearchFoodsByCategory,
+    searchFoodsByCategory,
   } = useContext(Context);
   const maxFilter = 5;
 
@@ -22,12 +23,22 @@ function FilterFoods() {
   }, []);
 
   const filterButton = async (category) => {
-    setSearchFoodsByCategory(true);
-    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const { meals } = data;
-    setReceivedFoods(meals);
+    if (searchFoodsByCategory === false) {
+      setSearchFoodsByCategory(true);
+      const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const { meals } = data;
+      setReceivedFoods(meals);
+    }
+    if (searchFoodsByCategory === true) {
+      setSearchFoodsByCategory(false);
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const data = await response.json();
+      const { meals } = data;
+      setReceivedFoods(meals);
+    }
   };
 
   return (
