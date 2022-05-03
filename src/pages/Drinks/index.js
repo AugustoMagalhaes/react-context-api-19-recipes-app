@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header/index';
 import Footer from '../../components/Footer/index';
 import Context from '../../context/Context';
+import DrinkCards from '../../components/DrinkCards';
 
 function DrinksScreen() {
   const pageTitle = 'Drinks';
@@ -19,6 +20,7 @@ function DrinksScreen() {
   return (
     <div>
       <Header pageTitle={ pageTitle } hasSearch={ hasSearch } />
+      <DrinkCards />
       <Footer />
     </div>
   );
