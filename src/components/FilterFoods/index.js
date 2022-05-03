@@ -7,7 +7,8 @@ function FilterFoods() {
     setReceivedCategoryFoods,
     setReceivedFoods,
     setSearchFoodsByCategory,
-    searchFoodsByCategory,
+    selectedFilter,
+    setSelectedFilter,
   } = useContext(Context);
   const maxFilter = 5;
 
@@ -23,7 +24,8 @@ function FilterFoods() {
   }, []);
 
   const filterButton = async (category) => {
-    if (searchFoodsByCategory === false) {
+    if (selectedFilter !== category) {
+      setSelectedFilter(category);
       setSearchFoodsByCategory(true);
       const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
       const response = await fetch(url);
@@ -31,19 +33,35 @@ function FilterFoods() {
       const { meals } = data;
       setReceivedFoods(meals);
     }
-    if (searchFoodsByCategory === true) {
+    if (selectedFilter === category) {
       setSearchFoodsByCategory(false);
       const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(url);
       const data = await response.json();
       const { meals } = data;
       setReceivedFoods(meals);
+      setSelectedFilter('');
     }
+  };
+
+  const buttonAll = async () => {
+    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s';
+    const response = await fetch(url);
+    const data = await response.json();
+    const { meals } = data;
+    setReceivedFoods(meals);
+    setSelectedFilter('');
   };
 
   return (
     <div>
-      <button type="button" data-testid="All-category-filter">All</button>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ buttonAll }
+      >
+        All
+      </button>
       {receivedCategoryFoods && receivedCategoryFoods.map((category, index) => (
         index < maxFilter
         && (

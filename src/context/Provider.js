@@ -12,6 +12,7 @@ function Provider({ children }) {
   const [receivedCategoryFoods, setReceivedCategoryFoods] = useState([]);
   const [searchFoodsByCategory, setSearchFoodsByCategory] = useState(false);
   const [searchDrinksByCategory, setSearchDrinksByCategory] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     const validateLogin = () => {
@@ -25,6 +26,8 @@ function Provider({ children }) {
   }, [email, password]);
 
   const contextValue = {
+    selectedFilter,
+    setSelectedFilter,
     searchDrinksByCategory,
     setSearchDrinksByCategory,
     searchFoodsByCategory,

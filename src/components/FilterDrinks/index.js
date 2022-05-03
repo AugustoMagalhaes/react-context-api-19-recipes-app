@@ -7,7 +7,8 @@ function FilterDrinks() {
     setReceivedCategoryDrinks,
     setReceivedDrinks,
     setSearchDrinksByCategory,
-    searchDrinksByCategory,
+    selectedFilter,
+    setSelectedFilter,
   } = useContext(Context);
   const maxFilter = 5;
 
@@ -23,7 +24,8 @@ function FilterDrinks() {
   }, []);
 
   const filterButton = async (category) => {
-    if (searchDrinksByCategory === false) {
+    if (selectedFilter !== category) {
+      setSelectedFilter(category);
       setSearchDrinksByCategory(true);
       const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
       const response = await fetch(url);
@@ -31,19 +33,35 @@ function FilterDrinks() {
       const { drinks } = data;
       setReceivedDrinks(drinks);
     }
-    if (searchDrinksByCategory === true) {
+    if (selectedFilter === category) {
       setSearchDrinksByCategory(false);
       const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(url);
       const data = await response.json();
       const { drinks } = data;
       setReceivedDrinks(drinks);
+      setSelectedFilter('');
     }
+  };
+
+  const buttonAll = async () => {
+    const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s';
+    const response = await fetch(url);
+    const data = await response.json();
+    const { drinks } = data;
+    setReceivedDrinks(drinks);
+    setSelectedFilter('');
   };
 
   return (
     <div>
-      <button type="button" data-testid="All-category-filter">All</button>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => buttonAll() }
+      >
+        All
+      </button>
       {receivedCategoryDrinks && receivedCategoryDrinks.map((category, index) => (
         index < maxFilter
         && (
