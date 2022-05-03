@@ -17,46 +17,40 @@ function Header({ pageTitle, hasSearch }) {
 
   return (
     <header>
-      <Link
-        style={ { cursor: cursorStyle } }
-        to="/profile"
-      >
-        <img
-          src={ profile }
-          alt="Icone do Perfil"
-          data-testid="profile-top-btn"
-        />
-      </Link>
+      <section className="header">
+        <Link
+          style={ { cursor: cursorStyle } }
+          to="/profile"
+        >
+          <img
+            src={ profile }
+            alt="Icone do Perfil"
+            data-testid="profile-top-btn"
+          />
+        </Link>
 
-      <h1 data-testid="page-title">{ pageTitle }</h1>
-      {hasSearch
-        ? (
-          <section>
-            <button
-              type="button"
-              className="search-btn"
-              onClick={ () => setDisplaySearchBar(!displaySearchBar) }
-            >
-              <img
-                src={ search }
-                alt="Icone do Perfil"
-                data-testid="search-top-btn"
-              />
-            </button>
-            <SearchBar displaySearchBar={ displaySearchBar } />
-          </section>
-        ) : null }
+        <h1 data-testid="page-title">{ pageTitle }</h1>
+        {hasSearch
+          ? (
+            <section>
+              <button
+                type="button"
+                className="search-btn"
+                onClick={ () => setDisplaySearchBar(!displaySearchBar) }
+              >
+                <img
+                  src={ search }
+                  alt="Icone do Perfil"
+                  data-testid="search-top-btn"
+                />
+              </button>
+            </section>
+          ) : null }
+      </section>
 
-      {/*
-        profile não tem lupa
-        done recipes não tem lupa
-        Favorite Recipes não tem lupa
-
-        tem lupa:
-        Foods
-        Drinks
-        Explore Nationalities
-      */}
+      <section className="searchBar">
+        <SearchBar displaySearchBar={ displaySearchBar } />
+      </section>
     </header>
   );
 }

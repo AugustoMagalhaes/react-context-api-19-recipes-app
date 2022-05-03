@@ -1,0 +1,27 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.searchBar input {
+  margin: 15px;
+  width: 70%;
+}
+
+.radio-bottom {
+  display: flex;
+  justify-content: center;
+
+}
+
+.main-section {
+  width: 100%;
+}
+

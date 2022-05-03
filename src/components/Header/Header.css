@@ -4,7 +4,7 @@ body {
   padding: 0;
 }
 
-header {
+.header {
   align-items: center;
   background-color: #e5e5e5;
   display: flex;
@@ -12,7 +12,7 @@ header {
   min-height: 80px;
 }
 
-header img {
+.header img {
   width: 50px;
 }
 
