@@ -4,15 +4,19 @@ import Header from '../../components/Header/index';
 import Footer from '../../components/Footer/index';
 import Context from '../../context/Context';
 import FoodCards from '../../components/FoodCards';
+import FilterFoods from '../../components/FilterFoods';
 
 function FoodsScreen() {
   const pageTitle = 'Foods';
   const hasSearch = true;
-  const { receivedFoods, setReceivedFoods } = useContext(Context);
+  const { receivedFoods,
+    setReceivedFoods,
+    searchFoodsByCategory,
+  } = useContext(Context);
   const history = useHistory();
 
   useEffect(() => {
-    if (receivedFoods.length === 1) {
+    if (searchFoodsByCategory === false && receivedFoods.length === 1) {
       history.push(`/foods/${receivedFoods[0].idMeal}`);
     }
   }, [receivedFoods, history]);
@@ -31,6 +35,7 @@ function FoodsScreen() {
   return (
     <div>
       <Header pageTitle={ pageTitle } hasSearch={ hasSearch } />
+      <FilterFoods />
       <FoodCards />
       <Footer />
     </div>

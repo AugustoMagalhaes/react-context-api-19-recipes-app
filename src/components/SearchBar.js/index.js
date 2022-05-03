@@ -12,7 +12,12 @@ export default function SearchBar({ displaySearchBar }) {
   const [searchInput, setSearchInput] = useState('');
   const [searchRadio, setSearchRadio] = useState('ingredient');
 
-  const { setReceivedDrinks, setReceivedFoods } = useContext(Context);
+  const {
+    setReceivedDrinks,
+    setReceivedFoods,
+    setSearchDrinksByCategory,
+    setSearchFoodsByCategory,
+  } = useContext(Context);
 
   const location = useLocation();
 
@@ -57,9 +62,11 @@ export default function SearchBar({ displaySearchBar }) {
     const { pathname } = location;
     if (pathname === '/drinks') {
       await getDrinks();
+      setSearchDrinksByCategory(false);
     }
     if (pathname === '/foods') {
       await getFoods();
+      setSearchFoodsByCategory(false);
     }
   };
 
