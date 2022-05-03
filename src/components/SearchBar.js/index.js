@@ -10,11 +10,13 @@ import Context from '../../context/Context';
 export default function SearchBar({ displaySearchBar }) {
   const [searchInput, setSearchInput] = useState('');
   const [searchRadio, setSearchRadio] = useState('ingredient');
-  const {
-    setReceivedDrinks, setReceivedFoods } = useContext(Context);
+
+  const { setReceivedDrinks, setReceivedFoods } = useContext(Context);
+
   const location = useLocation();
+
   const getFoods = async () => {
-    // tentar otimizar esses if's; o return é temporario por enquanto
+    // tentar otimizar esses if's;
     if (searchRadio === 'name') {
       const receivedProducts = await getFoodsByName(searchInput);
       setReceivedFoods(receivedProducts);
@@ -25,24 +27,26 @@ export default function SearchBar({ displaySearchBar }) {
     }
     if (searchRadio === 'firstLetter') {
       const receivedProducts = await getFoodsByFirsLetter(searchInput);
-      if (receivedProducts) {
-        setReceivedFoods(receivedProducts);
-      }
+      setReceivedFoods(receivedProducts);
     }
   };
 
   const getDrinks = async () => {
     if (searchRadio === 'name') {
       const receivedProducts = await getCocktailsByName(searchInput);
-      setReceivedDrinks(receivedProducts);
+      if (receivedProducts.length > 0) {
+        setReceivedDrinks(receivedProducts);
+      }
     }
     if (searchRadio === 'ingredient') {
       const receivedProducts = await getCocktailsByIngredient(searchInput);
-      setReceivedDrinks(receivedProducts);
+      if (receivedProducts.length > 0) {
+        setReceivedDrinks(receivedProducts);
+      }
     }
     if (searchRadio === 'firstLetter') {
       const receivedProducts = await getCocktailsByFirstLetter(searchInput);
-      if (receivedProducts) {
+      if (receivedProducts.length > 0) {
         setReceivedDrinks(receivedProducts);
       }
     }
@@ -51,10 +55,10 @@ export default function SearchBar({ displaySearchBar }) {
   const getProducts = async () => {
     const { pathname } = location;
     if (pathname === '/drinks') {
-      getDrinks();
+      await getDrinks();
     }
     if (pathname === '/foods') {
-      getFoods();
+      await getFoods();
     }
   };
 
@@ -98,6 +102,7 @@ export default function SearchBar({ displaySearchBar }) {
             data-testid="name-search-radio"
             value="name"
             onChange={ (e) => setSearchRadio(e.target.value) }
+            checked={ searchRadio === 'name' }
           />
         </label>
 
@@ -110,6 +115,7 @@ export default function SearchBar({ displaySearchBar }) {
             data-testid="first-letter-search-radio"
             value="firstLetter"
             onChange={ (e) => setSearchRadio(e.target.value) }
+            checked={ searchRadio === 'firstLetter' }
           />
         </label>
       </section>

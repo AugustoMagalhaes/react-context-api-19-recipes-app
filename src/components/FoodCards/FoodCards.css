@@ -1,0 +1,24 @@
+main {
+  align-content: baseline;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin-bottom: 70px;
+}
+
+.food-card {
+  align-items: center;
+  border: 2px solid orange;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 450px;
+  justify-content: space-between;
+  margin: 20px;
+  padding: 20px;
+  width: 400px;
+}
+
+.food-card img {
+  height: 300px;
+  width: 300px;
+}
