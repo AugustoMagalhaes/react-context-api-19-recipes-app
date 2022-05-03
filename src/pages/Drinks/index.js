@@ -8,7 +8,7 @@ import DrinkCards from '../../components/DrinkCards';
 function DrinksScreen() {
   const pageTitle = 'Drinks';
   const hasSearch = true;
-  const { receivedDrinks } = useContext(Context);
+  const { receivedDrinks, setReceivedDrinks } = useContext(Context);
   const history = useHistory();
 
   useEffect(() => {
@@ -16,6 +16,17 @@ function DrinksScreen() {
       history.push(`/drinks/${receivedDrinks[0].idDrink}`);
     }
   }, [receivedDrinks, history]);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const data = await response.json();
+      const { drinks } = data;
+      setReceivedDrinks(drinks);
+    };
+    fetchRecipe();
+  }, []);
 
   return (
     <div>

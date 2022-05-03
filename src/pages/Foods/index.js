@@ -8,7 +8,7 @@ import FoodCards from '../../components/FoodCards';
 function FoodsScreen() {
   const pageTitle = 'Foods';
   const hasSearch = true;
-  const { receivedFoods } = useContext(Context);
+  const { receivedFoods, setReceivedFoods } = useContext(Context);
   const history = useHistory();
 
   useEffect(() => {
@@ -16,6 +16,17 @@ function FoodsScreen() {
       history.push(`/foods/${receivedFoods[0].idMeal}`);
     }
   }, [receivedFoods, history]);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const data = await response.json();
+      const { meals } = data;
+      setReceivedFoods(meals);
+    };
+    fetchRecipe();
+  }, []);
 
   return (
     <div>
