@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import Meal from '../Meal';
-import { getFoodsByIngredient } from '../../services/fetchFoods';
 import './DetailsCard.css';
 
 const FoodDetailsCard = ({ food }) => {
@@ -29,18 +28,23 @@ const FoodDetailsCard = ({ food }) => {
     setMeasures(measuresList);
   }, []);
 
+  const fetchRecipeDrinks = async () => {
+    const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    const response = await fetch(url);
+    const data = await response.json();
+    const { drinks } = data;
+    return drinks;
+  };
+
   useEffect(() => {
     const getTwoDrinks = async () => {
-      const recommendedList = await getFoodsByIngredient('sage');
-      console.log('oi', recommendedList);
-      const [one, two] = recommendedList;
-      const recTwoDrinks = [one, two];
-      setRecommended(recTwoDrinks);
+      const recommendedList = await fetchRecipeDrinks();
+      const amount = 6;
+      const recommendedDrinks = recommendedList.slice(0, amount);
+      setRecommended(recommendedDrinks);
     };
     getTwoDrinks();
   }, []);
-
-  console.log('lintin', recommended);
 
   return (
     <section className="container-details">
@@ -102,19 +106,20 @@ const FoodDetailsCard = ({ food }) => {
         />
       </section>
 
-      <section data-testid={ `${0}-recomendation-card` }>
+      <section className="carosel">
         {
           recommended && recommended.map((rec, index) => (
             <section
               key={ uuidv4() }
               data-testid={ `${index}-recomendation-card` }
             >
-              <h4>{rec.strMeal}</h4>
-              <img src={ rec.strMealThumb } alt="" />
+              <h4>{rec.strDrinkl}</h4>
+              <img src={ rec.strDrinkThumb } alt="oi" />
             </section>
 
           ))
         }
+
       </section>
       <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
 

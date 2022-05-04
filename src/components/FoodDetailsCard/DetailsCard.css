@@ -17,3 +17,18 @@ body {
   justify-content: space-around;
   margin-bottom: 20px;
 }
+
+.carosel {
+  display: flex;
+  margin: 20px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+  width: 600px;
+}
+
+.carosel img {
+  height: 300px;
+  width: 300px;
+}
+

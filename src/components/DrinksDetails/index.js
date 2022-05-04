@@ -6,19 +6,17 @@ import DrinkDetailsCard from '../DrinkDetailsCard';
 
 const DrinksDetails = () => {
   const location = useLocation();
-  const [renderDrinks, setRenderDrinks] = useState({});
+  const [renderDrink, setRenderDrinks] = useState({});
   const [notFound, setNotFound] = useState(false);
   const { id } = useParams();
-  console.log(location);
 
   useEffect(() => {
     const getDrinksNevertheless = async () => {
       if (location.state) {
-        setRenderDrinks(location.state.drinks);
+        setRenderDrinks(location.state.drink);
       } else {
         try {
           const drinks = await getCocktailsById(id);
-          console.log('drinks ', drinks);
           setRenderDrinks(drinks);
         } catch (err) {
           console.error(err);
@@ -27,14 +25,14 @@ const DrinksDetails = () => {
       }
     };
     getDrinksNevertheless();
-  }, []);
+  }, [id, location.state]);
 
   return (
     <section>
       {
-        renderDrinks.strDrink
+        renderDrink.strDrink
           && (
-            <DrinkDetailsCard drinks={ renderDrinks } />
+            <DrinkDetailsCard drink={ renderDrink } />
           )
 
       }

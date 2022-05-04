@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import Cocktail from '../Cocktail';
-import { getFoodsByIngredient } from '../../services/fetchFoods';
-/* import './DetailsCard.css'; */
 
 const DrinkDetailsCard = ({ drink }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -13,14 +11,14 @@ const DrinkDetailsCard = ({ drink }) => {
     const drinkKeys = Object.keys(drink);
     const ingredientsList = drinkKeys
       .reduce((acc, key) => {
-        if (key.includes('strIngredient') && drink[key]) {
+        if (key.includes('strIngredient')) {
           acc = [...acc, { ingredient: drink[key] }];
         }
         return acc;
       }, []);
     const measuresList = drinkKeys
       .reduce((acc, key) => {
-        if (key.includes('strMeasure') && drink[key]) {
+        if (key.includes('strMeasure')) {
           acc = [...acc, { measure: drink[key] }];
         }
         return acc;
@@ -29,29 +27,38 @@ const DrinkDetailsCard = ({ drink }) => {
     setMeasures(measuresList);
   }, []);
 
-  useEffect(() => {
-    const getTwoDrinks = async () => {
-      const recommendedList = await getFoodsByIngredient('sage');
-      console.log('oi', recommendedList);
-      const [one, two] = recommendedList;
-      const recTwoDrinks = [one, two];
-      setRecommended(recTwoDrinks);
-    };
-    getTwoDrinks();
-  }, []);
+  const fetchRecipeFoods = async () => {
+    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    const response = await fetch(url);
+    const data = await response.json();
+    const { meals } = data;
+    return meals;
+  };
 
-  console.log('lintin', recommended);
+  useEffect(() => {
+    const getTwoFoods = async () => {
+      const recommendedList = await fetchRecipeFoods();
+      const amount = 6;
+      const recommendedFoods = recommendedList.slice(0, amount);
+      setRecommended(recommendedFoods);
+    };
+    getTwoFoods();
+  }, []);
 
   return (
     <section className="container-details">
       <Cocktail
-        drink={ food }
+        drink={ drink }
         titleTestId="recipe-title"
         imgTestId="recipe-photo"
       />
 
       <p data-testid="recipe-category">
         {drink.strCategory}
+        {' '}
+        {'('}
+        {drink.strAlcoholic}
+        {')'}
       </p>
       <div className="buttons">
         <button
@@ -109,10 +116,9 @@ const DrinkDetailsCard = ({ drink }) => {
               key={ uuidv4() }
               data-testid={ `${index}-recomendation-card` }
             >
-              <h4>{rec.strDrink}</h4>
-              <img src={ rec.strDrinkThumb } alt="" />
+              <h4>{rec.strMeal}</h4>
+              <img src={ rec.strMealThumb } alt="" />
             </section>
-
           ))
         }
       </section>

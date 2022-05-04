@@ -6,18 +6,18 @@ import FoodDetailsCard from '../FoodDetailsCard';
 
 const FoodDetails = () => {
   const location = useLocation();
-  const [renderFood, setFood] = useState({});
+  const [renderFood, setRenderFood] = useState({});
   const [notFound, setNotFound] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
     const getFoodNevertheless = async () => {
       if (location.state) {
-        setFood(location.state.food);
+        setRenderFood(location.state.food);
       } else {
         try {
-          const food = await getFoodById(id);
-          setFood(food);
+          const foods = await getFoodById(id);
+          setRenderFood(foods);
         } catch (err) {
           console.error(err);
           setNotFound(true);
