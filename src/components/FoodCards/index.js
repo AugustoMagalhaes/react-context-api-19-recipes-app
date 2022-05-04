@@ -17,6 +17,7 @@ const FoodCards = () => {
           index < maxAmountOfFoods
           && (
             <Link
+              className="food-card"
               key={ uuidv4() }
               data-testid={ `${index}-recipe-card` }
               to={ {
