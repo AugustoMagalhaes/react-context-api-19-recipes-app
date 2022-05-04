@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { getFoodById } from '../../services/fetchFoods';
 import RecipeNotFound from '../RecipeNotFound';
-import DetailsCard from '../DetailsCard';
+import FoodDetailsCard from '../FoodDetailsCard';
 
 const FoodDetails = () => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const FoodDetails = () => {
       {
         renderFood.strMeal
           && (
-            <DetailsCard food={ renderFood } />
+            <FoodDetailsCard food={ renderFood } />
           )
 
       }

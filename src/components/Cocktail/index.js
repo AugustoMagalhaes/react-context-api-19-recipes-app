@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImageNotFound from '../../images/ImageNotFound.png';
 
-const Drink = ({ drink, titleTestId, imgTestId }) => (
+const Cocktail = ({ drink, titleTestId, imgTestId }) => (
   <section>
     <img
       data-testid={ imgTestId }
@@ -15,10 +15,10 @@ const Drink = ({ drink, titleTestId, imgTestId }) => (
   </section>
 );
 
-Drink.propTypes = {
+Cocktail.propTypes = {
   drink: PropTypes.shape(PropTypes.shape).isRequired,
   titleTestId: PropTypes.string.isRequired,
   imgTestId: PropTypes.string.isRequired,
 };
 
-export default Meal;
+export default Cocktail;

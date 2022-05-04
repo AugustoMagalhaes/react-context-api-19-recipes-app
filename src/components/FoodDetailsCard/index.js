@@ -5,7 +5,7 @@ import Meal from '../Meal';
 import { getFoodsByIngredient } from '../../services/fetchFoods';
 import './DetailsCard.css';
 
-const DetailsCard = ({ food }) => {
+const FoodDetailsCard = ({ food }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommended, setRecommended] = useState([]);
@@ -102,7 +102,7 @@ const DetailsCard = ({ food }) => {
         />
       </section>
 
-      <section>
+      <section data-testid={ `${0}-recomendation-card` }>
         {
           recommended && recommended.map((rec, index) => (
             <section
@@ -122,8 +122,8 @@ const DetailsCard = ({ food }) => {
   );
 };
 
-DetailsCard.propTypes = {
+FoodDetailsCard.propTypes = {
   food: PropTypes.shape(PropTypes.shape).isRequired,
 };
 
-export default DetailsCard;
+export default FoodDetailsCard;

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { getCocktailsById } from '../../services/fetchCocktails';
 import RecipeNotFound from '../RecipeNotFound';
-import DetailsCard from '../DetailsCard';
+import DrinkDetailsCard from '../DrinkDetailsCard';
 
 const DrinksDetails = () => {
   const location = useLocation();
   const [renderDrinks, setRenderDrinks] = useState({});
   const [notFound, setNotFound] = useState(false);
   const { id } = useParams();
+  console.log(location);
 
   useEffect(() => {
     const getDrinksNevertheless = async () => {
@@ -17,6 +18,7 @@ const DrinksDetails = () => {
       } else {
         try {
           const drinks = await getCocktailsById(id);
+          console.log('drinks ', drinks);
           setRenderDrinks(drinks);
         } catch (err) {
           console.error(err);
@@ -25,14 +27,14 @@ const DrinksDetails = () => {
       }
     };
     getDrinksNevertheless();
-  }, [id, location.state]);
+  }, []);
 
   return (
     <section>
       {
-        renderDrinks.strMeal
+        renderDrinks.strDrink
           && (
-            <DetailsCard drinks={ renderDrinks } />
+            <DrinkDetailsCard drinks={ renderDrinks } />
           )
 
       }
