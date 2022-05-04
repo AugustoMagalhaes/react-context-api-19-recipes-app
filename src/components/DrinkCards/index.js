@@ -17,22 +17,23 @@ const DrinkCards = () => {
           && (
             <Link
               to={ `/drinks/${drink.idDrink}` }
+              key={ uuidv4() }
             >
               <section
-                key={ uuidv4() }
+                // key={ uuidv4() }
                 data-testid={ `${index}-recipe-card` }
                 className="drink-card"
               >
-                <h4
-                  data-testid={ `${index}-card-name` }
-                >
-                  {drink.strDrink}
-                </h4>
                 <img
                   data-testid={ `${index}-card-img` }
                   src={ drink.strDrinkThumb || ImageNotFound }
                   alt={ `Imagem de ${drink.strDrink}` }
                 />
+                <h4
+                  data-testid={ `${index}-card-name` }
+                >
+                  {drink.strDrink}
+                </h4>
               </section>
             </Link>
           )))}

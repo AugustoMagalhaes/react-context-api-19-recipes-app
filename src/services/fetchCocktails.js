@@ -48,3 +48,11 @@ export const getCocktailsByFirstLetter = async (firstLetter) => {
   }
   return drinks;
 };
+
+export const getCocktailsById = async (id) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  const { drinks } = data;
+  return drinks[0];
+};

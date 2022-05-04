@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import Meal from '../Meal';
 import { getFoodsByIngredient } from '../../services/fetchFoods';
+import './DetailsCard.css';
 
 const DetailsCard = ({ food }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -43,7 +44,7 @@ const DetailsCard = ({ food }) => {
   console.log('lintin', recommended);
 
   return (
-    <section>
+    <section className="container-details">
       <Meal
         food={ food }
         titleTestId="recipe-title"
@@ -53,19 +54,20 @@ const DetailsCard = ({ food }) => {
       <p data-testid="recipe-category">
         {food.strCategory}
       </p>
-      <button
-        type="button"
-        data-testid="share-btn"
-      >
-        Compartilhar
-      </button>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Favoritar
-      </button>
-
+      <div className="buttons">
+        <button
+          type="button"
+          data-testid="share-btn"
+        >
+          Compartilhar
+        </button>
+        <button
+          type="button"
+          data-testid="favorite-btn"
+        >
+          Favoritar
+        </button>
+      </div>
       <ul>
         {
           ingredients

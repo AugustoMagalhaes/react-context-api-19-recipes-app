@@ -1,0 +1,17 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+button {
+  background-color: #e5e5e5;
+  border: none;
+  width: 8em;
+}

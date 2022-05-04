@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Context from '../../context/Context';
+import './FilterDrinks.css';
 
 function FilterDrinks() {
   const {
@@ -54,7 +55,7 @@ function FilterDrinks() {
   };
 
   return (
-    <div>
+    <div className="container">
       <button
         type="button"
         data-testid="All-category-filter"
