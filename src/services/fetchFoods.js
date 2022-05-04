@@ -53,5 +53,5 @@ export const getFoodRandom = async () => {
   const response = await fetch(url);
   const data = await response.json();
   const { meals } = data;
-  return meals;
+  return meals[0].idMeal;
 };
