@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 import Context from '../../context/Context';
-import ImageNotFound from '../../images/ImageNotFound.png';
+/* import ImageNotFound from '../../images/ImageNotFound.png'; */
 import './FoodCards.css';
+import Meal from '../Meal';
 
 const FoodCards = () => {
   const { receivedFoods } = useContext(Context);
@@ -16,22 +17,21 @@ const FoodCards = () => {
           index < maxAmountOfFoods
           && (
             <Link
-              to={ `/foods/${food.idMeal}` }
+              key={ uuidv4() }
+              data-testid={ `${index}-recipe-card` }
+              to={ {
+                pathname: `/foods/${food.idMeal}`,
+                state: {
+                  food,
+                },
+              } }
             >
-              <section
-                key={ uuidv4() }
-                data-testid={ `${index}-recipe-card` }
-                className="food-card"
-              >
-                <h4 data-testid={ `${index}-card-name` }>
-                  {food.strMeal}
-                </h4>
-                <img
-                  data-testid={ `${index}-card-img` }
-                  src={ food.strMealThumb || ImageNotFound }
-                  alt={ `Imagem de ${food.strMeal}` }
-                />
-              </section>
+              <Meal
+                food={ food }
+                index={ index }
+                titleTestId={ `${index}-card-name` }
+                imgTestId={ `${index}-card-img` }
+              />
             </Link>
           )))}
     </main>

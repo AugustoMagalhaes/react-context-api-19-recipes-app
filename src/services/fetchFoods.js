@@ -39,3 +39,11 @@ export const getFoodsByFirsLetter = async (firstLetter) => {
   }
   return meals;
 };
+
+export const getFoodById = async (id) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  const { meals } = data;
+  return meals[0];
+};
