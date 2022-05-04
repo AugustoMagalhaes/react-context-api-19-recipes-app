@@ -17,6 +17,7 @@ const DrinkCards = () => {
           && (
             <Link
               className="drink-card"
+              data-testid={ `${index}-recipe-card` }
               to={ {
                 pathname: `/drinks/${drink.idDrink}`,
                 state: {
@@ -26,9 +27,10 @@ const DrinkCards = () => {
               key={ uuidv4() }
             >
               <Cocktail
-                imgTestId="recipe-photo"
-                titleTestId="recipe-title"
+                imgTestId={ `${index}-card-img` }
+                titleTestId={ `${index}-card-name` }
                 drink={ drink }
+                index={ index }
               />
             </Link>
           )))}
