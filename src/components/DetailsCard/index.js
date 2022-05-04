@@ -103,8 +103,7 @@ const DetailsCard = ({ food }) => {
 
       <section>
         {
-          recommended.length > 0
-          && recommended.map((rec, index) => (
+          recommended && recommended.map((rec, index) => (
             <section
               key={ uuidv4() }
               data-testid={ `${index}-recomendation-card` }
