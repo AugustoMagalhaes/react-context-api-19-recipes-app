@@ -8,8 +8,8 @@ function ExploreDrinksScreen({ history }) {
   const pageTitle = 'Explore Drinks';
 
   const click = async () => {
-    const results = await getCocktailsRandom();
-    console.log(results);
+    const id = await getCocktailsRandom();
+    history.push(`/drinks/${id}`);
   };
 
   return (

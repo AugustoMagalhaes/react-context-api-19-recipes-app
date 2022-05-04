@@ -62,5 +62,5 @@ export const getCocktailsRandom = async () => {
   const response = await fetch(url);
   const data = await response.json();
   const { drinks } = data;
-  return drinks;
+  return drinks[0].idDrink;
 };

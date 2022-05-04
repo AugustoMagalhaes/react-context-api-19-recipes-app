@@ -8,8 +8,8 @@ function ExploreFoodsScreen({ history }) {
   const pageTitle = 'Explore Foods';
 
   const click = async () => {
-    const results = await getFoodRandom();
-    console.log(results);
+    const id = await getFoodRandom();
+    history.push(`/foods/${id}`);
   };
 
   return (
