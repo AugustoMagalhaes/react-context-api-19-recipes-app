@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 import Context from '../../context/Context';
-import ImageNotFound from '../../images/ImageNotFound.png';
 import './DrinkCards.css';
+import Cocktail from '../Cocktail';
 
 const DrinkCards = () => {
   const { receivedDrinks } = useContext(Context);
@@ -14,22 +15,22 @@ const DrinkCards = () => {
       && receivedDrinks.map((drink, index) => (
         index < maxAmountOfDrinks
           && (
-            <section
-              key={ uuidv4() }
-              data-testid={ `${index}-recipe-card` }
+            <Link
               className="drink-card"
+              to={ {
+                pathname: `/drinks/${drink.idDrink}`,
+                state: {
+                  drink,
+                },
+              } }
+              key={ uuidv4() }
             >
-              <h4
-                data-testid={ `${index}-card-name` }
-              >
-                {drink.strDrink}
-              </h4>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ drink.strDrinkThumb || ImageNotFound }
-                alt={ `Imagem de ${drink.strDrink}` }
+              <Cocktail
+                imgTestId="recipe-photo"
+                titleTestId="recipe-title"
+                drink={ drink }
               />
-            </section>
+            </Link>
           )))}
     </main>
   );

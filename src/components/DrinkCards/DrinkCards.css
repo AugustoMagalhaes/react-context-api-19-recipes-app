@@ -1,8 +1,15 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 main {
-  align-content: baseline;
+  align-items: center;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
+  justify-content: center;
+  margin: 0;
   margin-bottom: 70px;
 }
 
@@ -10,7 +17,7 @@ main {
   align-items: center;
   border: 2px solid orange;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   height: 450px;
   justify-content: space-between;
   margin: 20px;
@@ -21,4 +28,23 @@ main {
 .drink-card img {
   height: 300px;
   width: 300px;
+}
+
+.drink-card:hover {
+  background-color: rgb(219, 216, 216);
+}
+
+.drink-card h4 {
+  color: rgb(68, 67, 67);
+  margin-top: 0.5em;
+  text-align: center;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:hover h4 {
+  font-weight: 700;
 }

@@ -40,7 +40,7 @@ function Header({ pageTitle, hasSearch }) {
               >
                 <img
                   src={ search }
-                  alt="Icone do Perfil"
+                  alt="Icone de Pesquisa"
                   data-testid="search-top-btn"
                 />
               </button>

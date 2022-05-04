@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 import Context from '../../context/Context';
-import ImageNotFound from '../../images/ImageNotFound.png';
+/* import ImageNotFound from '../../images/ImageNotFound.png'; */
 import './FoodCards.css';
+import Meal from '../Meal';
 
 const FoodCards = () => {
   const { receivedFoods } = useContext(Context);
@@ -10,26 +12,29 @@ const FoodCards = () => {
 
   return (
     <main>
-      {
-        receivedFoods.map((food, index) => (
+      { receivedFoods.length > 0
+        && receivedFoods.map((food, index) => (
           index < maxAmountOfFoods
           && (
-            <section
+            <Link
+              className="food-card"
               key={ uuidv4() }
               data-testid={ `${index}-recipe-card` }
-              className="food-card"
+              to={ {
+                pathname: `/foods/${food.idMeal}`,
+                state: {
+                  food,
+                },
+              } }
             >
-              <h4 data-testid={ `${index}-card-name` }>
-                {food.strMeal}
-              </h4>
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ food.strMealThumb || ImageNotFound }
-                alt={ `Imagem de ${food.strMeal}` }
+              <Meal
+                food={ food }
+                index={ index }
+                titleTestId={ `${index}-card-name` }
+                imgTestId={ `${index}-card-img` }
               />
-            </section>
-          )))
-      }
+            </Link>
+          )))}
     </main>
   );
 };

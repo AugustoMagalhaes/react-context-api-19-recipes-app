@@ -1,8 +1,8 @@
 main {
-  align-content: baseline;
+  align-items: center;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
+  justify-content: center;
   margin-bottom: 70px;
 }
 
@@ -21,4 +21,19 @@ main {
 .food-card img {
   height: 300px;
   width: 300px;
+}
+
+.food-card h3 {
+  color: rgb(68, 67, 67);
+  margin-top: 1.5em;
+  text-align: center;
+}
+
+.food-card:hover {
+  background-color: rgb(219, 216, 216);
+  text-decoration: none;
+}
+
+a:hover h3 {
+  font-weight: 700;
 }

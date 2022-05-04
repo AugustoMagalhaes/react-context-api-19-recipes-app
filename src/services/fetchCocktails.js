@@ -49,10 +49,10 @@ export const getCocktailsByFirstLetter = async (firstLetter) => {
   return drinks;
 };
 
-export const getCocktailsRandom = async () => {
-  const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+export const getCocktailsById = async (id) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const response = await fetch(url);
   const data = await response.json();
   const { drinks } = data;
-  return drinks;
+  return drinks[0];
 };

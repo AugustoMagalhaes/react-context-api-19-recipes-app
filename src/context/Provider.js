@@ -8,6 +8,11 @@ function Provider({ children }) {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [receivedDrinks, setReceivedDrinks] = useState([]);
   const [receivedFoods, setReceivedFoods] = useState([]);
+  const [receivedCategoryDrinks, setReceivedCategoryDrinks] = useState([]);
+  const [receivedCategoryFoods, setReceivedCategoryFoods] = useState([]);
+  const [searchFoodsByCategory, setSearchFoodsByCategory] = useState(false);
+  const [searchDrinksByCategory, setSearchDrinksByCategory] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     const validateLogin = () => {
@@ -21,6 +26,16 @@ function Provider({ children }) {
   }, [email, password]);
 
   const contextValue = {
+    selectedFilter,
+    setSelectedFilter,
+    searchDrinksByCategory,
+    setSearchDrinksByCategory,
+    searchFoodsByCategory,
+    setSearchFoodsByCategory,
+    receivedCategoryFoods,
+    setReceivedCategoryFoods,
+    receivedCategoryDrinks,
+    setReceivedCategoryDrinks,
     receivedDrinks,
     setReceivedDrinks,
     receivedFoods,

@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container-details {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.buttons button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.carosel {
+  display: flex;
+  margin: 20px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  position: relative;
+  width: 600px;
+}
+
+.carosel img {
+  height: 300px;
+  width: 300px;
+}
+

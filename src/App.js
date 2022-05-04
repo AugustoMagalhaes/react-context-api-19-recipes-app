@@ -15,6 +15,8 @@ import ExploreNationalitiesScreen from './pages/ExploreNationalities';
 import ProfileScreen from './pages/Profile';
 import DoneRecipesScreen from './pages/DoneRecipes';
 import FavoriteRecipesScreen from './pages/FavoriteRecipes';
+import FoodDetailsScreen from './pages/FoodDetails';
+import DrinksDetailsScreen from './pages/DrinksDetails';
 
 function App() {
   return (
@@ -44,6 +46,16 @@ function App() {
           <Route exact path="/explore/foods" component={ ExploreFoodsScreen } />
           <Route exact path="/foods" component={ FoodsScreen } />
           <Route exact path="/drinks" component={ DrinksScreen } />
+          <Route
+            exact
+            path="/drinks/:id"
+            component={ DrinksDetailsScreen }
+          />
+          <Route
+            exact
+            path="/foods/:id"
+            component={ FoodDetailsScreen }
+          />
           <Route exact path="/" component={ LoginScreen } />
         </Switch>
       </BrowserRouter>
