@@ -6,7 +6,7 @@ import LoginScreen from './pages/Login/Login';
 import Provider from './context/Provider';
 import FoodsScreen from './pages/Foods';
 import DrinksScreen from './pages/Drinks';
-import ExploreScreen from './pages/Explore';
+import ExploreScreen from './pages/Explore/index';
 import ExploreFoodsScreen from './pages/ExploreFoods';
 import ExploreDrinksScreen from './pages/ExploreDrinks';
 import ExploreFoodsIngScreen from './pages/ExploreFoodsIng';
@@ -21,6 +21,7 @@ function App() {
     <Provider>
       <BrowserRouter>
         <Switch>
+          <Route exact path="/explore" component={ ExploreScreen } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipesScreen } />
           <Route exact path="/done-recipes" component={ DoneRecipesScreen } />
           <Route exact path="/profile" component={ ProfileScreen } />
@@ -41,7 +42,6 @@ function App() {
           />
           <Route exact path="/explore/drinks" component={ ExploreDrinksScreen } />
           <Route exact path="/explore/foods" component={ ExploreFoodsScreen } />
-          <Route exact path="/explore" component={ ExploreScreen } />
           <Route exact path="/foods" component={ FoodsScreen } />
           <Route exact path="/drinks" component={ DrinksScreen } />
           <Route exact path="/" component={ LoginScreen } />
