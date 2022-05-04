@@ -7,32 +7,31 @@ import './DetailsCard.css';
 
 const DetailsCard = ({ food }) => {
   const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
   const [recommended, setRecommended] = useState([]);
   useEffect(() => {
-    const foodEntries = Object.entries(food);
-    console.log('eh entries ', foodEntries);
-    const filterIngredients = foodEntries
-      .filter((ingredient) => ingredient[0].includes('strIngredient')
-      && ingredient[1]);
-    const filterMeasures = foodEntries
-      .filter((measure) => measure[0].includes('strMeasure')
-      && measure[1]);
-    const recipeIngredients = filterMeasures.reduce((final, curr, index) => {
-      final = [
-        ...final,
-        {
-          ingredient: filterIngredients[index][1],
-          measure: curr[1],
-        },
-      ];
-      return final;
-    }, []);
-    setIngredients(recipeIngredients);
+    const foodKeys = Object.keys(food);
+    const ingredientsList = foodKeys
+      .reduce((acc, key) => {
+        if (key.includes('strIngredient') && food[key]) {
+          acc = [...acc, { ingredient: food[key] }];
+        }
+        return acc;
+      }, []);
+    const measuresList = foodKeys
+      .reduce((acc, key) => {
+        if (key.includes('strMeasure') && food[key]) {
+          acc = [...acc, { measure: food[key] }];
+        }
+        return acc;
+      }, []);
+    setIngredients(ingredientsList);
+    setMeasures(measuresList);
   }, []);
 
   useEffect(() => {
     const getTwoDrinks = async () => {
-      const recommendedList = await getFoodsByIngredient('milk');
+      const recommendedList = await getFoodsByIngredient('sage');
       console.log('oi', recommendedList);
       const [one, two] = recommendedList;
       const recTwoDrinks = [one, two];
@@ -76,7 +75,7 @@ const DetailsCard = ({ food }) => {
                 key={ uuidv4() }
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
-                {`${item.ingredient} - ${item.measure}`}
+                {`${item.ingredient} - ${measures[index].measure}`}
               </li>
             ))
         }
