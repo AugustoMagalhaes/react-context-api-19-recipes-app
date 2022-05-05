@@ -35,8 +35,6 @@ function FoodsScreen() {
     }
   }, []);
 
-  console.log(receivedFoods[0]);
-
   return (
     <div>
       <Header pageTitle={ pageTitle } hasSearch={ hasSearch } />
