@@ -5,6 +5,7 @@ import Footer from '../../components/Footer/index';
 import { getFoodsNationalities } from '../../services/fetchFoods';
 import Context from '../../context/Context';
 import FoodCards from '../../components/FoodCards';
+import FilterFoods from '../../components/FilterFoods/index';
 
 function ExploreNationalitiesScreen() {
   const [nationalities, setNationalities] = useState([]);
@@ -29,15 +30,22 @@ function ExploreNationalitiesScreen() {
 
   useEffect(() => {
     const fetchRecipeNat = async () => {
-      const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedNat}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      const { meals } = data;
-      setReceivedFoods(meals);
+      if (selectedNat.length > 0 && selectedNat !== 'All') {
+        const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedNat}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        const { meals } = data;
+        setReceivedFoods(meals);
+      }
+      if (selectedNat.length > 0 && selectedNat === 'All') {
+        const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        const response = await fetch(url);
+        const data = await response.json();
+        const { meals } = data;
+        setReceivedFoods(meals);
+      }
     };
-    if (selectedNat.length > 0) {
-      fetchRecipeNat();
-    }
+    fetchRecipeNat();
   }, [selectedNat]);
 
   const pageTitle = 'Explore Nationalities';
@@ -50,6 +58,12 @@ function ExploreNationalitiesScreen() {
           data-testid="explore-by-nationality-dropdown"
           onChange={ (e) => setSelectedNat(e.target.value) }
         >
+          <option
+            value="All"
+            data-testid="All-option"
+          >
+            All
+          </option>
           {nationalities.map((nationality) => (
             <option
               key={ uuidv4() }
@@ -61,6 +75,7 @@ function ExploreNationalitiesScreen() {
           ))}
         </select>
       </section>
+      <FilterFoods />
       <FoodCards />
       <Footer />
     </div>

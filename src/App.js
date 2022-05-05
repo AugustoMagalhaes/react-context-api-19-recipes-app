@@ -17,6 +17,7 @@ import DoneRecipesScreen from './pages/DoneRecipes';
 import FavoriteRecipesScreen from './pages/FavoriteRecipes';
 import FoodDetailsScreen from './pages/FoodDetails';
 import DrinksDetailsScreen from './pages/DrinksDetails';
+import ExploreDrinksNationalitiesScreen from './pages/DrinksNationalities/index';
 
 function App() {
   return (
@@ -31,6 +32,11 @@ function App() {
             exact
             path="/explore/foods/nationalities"
             component={ ExploreNationalitiesScreen }
+          />
+          <Route
+            exact
+            path="/explore/drinks/nationalities"
+            component={ ExploreDrinksNationalitiesScreen }
           />
           <Route
             exact
