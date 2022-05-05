@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom';
 import Meal from '../Meal';
 import './DetailsCard.css';
 
@@ -8,6 +9,10 @@ const FoodDetailsCard = ({ food }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommended, setRecommended] = useState([]);
+  const [isDoneRecipe, setIsDoneRecipe] = useState(false);
+  const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
+
+  const { id } = useParams();
   useEffect(() => {
     const foodKeys = Object.keys(food);
     const ingredientsList = foodKeys
@@ -37,13 +42,42 @@ const FoodDetailsCard = ({ food }) => {
   };
 
   useEffect(() => {
-    const getTwoDrinks = async () => {
+    const getSixDrinks = async () => {
       const recommendedList = await fetchRecipeDrinks();
       const amount = 6;
       const recommendedDrinks = recommendedList.slice(0, amount);
       setRecommended(recommendedDrinks);
     };
-    getTwoDrinks();
+    getSixDrinks();
+  }, []);
+
+  const checkIsDone = () => {
+    const getDoneRecipesFromStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const findRecipeInStorage = getDoneRecipesFromStorage
+      .some((recipe) => recipe.id.includes(id));
+    setIsDoneRecipe(findRecipeInStorage);
+  };
+
+  const checkIsInProgress = () => {
+    const getInProgressRecipesFromStorage = JSON
+      .parse(localStorage.getItem('doneRecipes'));
+    if (getInProgressRecipesFromStorage) {
+      const mealsKeys = getInProgressRecipesFromStorage.meals;
+      const findRecipeInStorage = Object.keys(mealsKeys)
+        .some((recipe) => recipe.includes(id));
+      setIsInProgressRecipe(findRecipeInStorage);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('doneRecipes')) {
+      checkIsDone();
+    }
+    if (localStorage.getItem('inProgressRecipes')) {
+      checkIsInProgress();
+    }
+    console.log('isDone', isDoneRecipe);
+    console.log('isProg', isInProgressRecipe);
   }, []);
 
   return (
@@ -125,13 +159,28 @@ const FoodDetailsCard = ({ food }) => {
         }
 
       </section>
-      <button
-        className="startBtn"
-        type="button"
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-      </button>
+
+      {
+        !isDoneRecipe
+        && (
+          <button
+            className="startBtn"
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            {
+              !isInProgressRecipe
+                ? (
+                  'Start Recipe'
+                )
+                : (
+                  'Continue Recipe'
+                )
+            }
+
+          </button>
+        )
+      }
 
     </section>
   );

@@ -8,6 +8,7 @@ const DrinkDetailsCard = ({ drink }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommended, setRecommended] = useState([]);
+  const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   useEffect(() => {
     const drinkKeys = Object.keys(drink);
     const ingredientsList = drinkKeys
@@ -44,6 +45,20 @@ const DrinkDetailsCard = ({ drink }) => {
       setRecommended(recommendedFoods);
     };
     getTwoFoods();
+  }, []);
+
+  const checkIsDone = () => {
+    const getDoneRecipesFromStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    const findRecipeInStorage = getDoneRecipesFromStorage
+      .some((recipe) => recipe.id.includes(id));
+    setIsDoneRecipe(findRecipeInStorage);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('doneRecipes')) {
+      checkIsDone();
+    }
+    console.log('isDone', isDoneRecipe);
   }, []);
 
   return (

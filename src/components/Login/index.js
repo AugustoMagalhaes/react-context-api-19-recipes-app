@@ -23,7 +23,6 @@ function Login() {
     if (!localStorage.getItem('inProgressRecipes')) {
       localStorage.setItem('inProgressRecipes', JSON.stringify({}));
     }
-    localStorage.setItem();
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/foods');
   };
