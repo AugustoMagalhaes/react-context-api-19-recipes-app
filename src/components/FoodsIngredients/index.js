@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { getFoodsIngredients } from '../../services/fetchFoods';
 import Context from '../../context/Context';
+import './FoodsIngredients.css';
 
 function FoodsIngredients() {
   const [ingredients, setIngredients] = useState([]);
   const { setReceivedFoods } = useContext(Context);
+  const history = useHistory();
   useEffect(() => {
     const fetchApi = async () => {
       const response = await getFoodsIngredients();
@@ -23,15 +25,18 @@ function FoodsIngredients() {
     const data = await response.json();
     const { meals } = data;
     setReceivedFoods(meals);
+    history.push('/foods');
+    console.log('Api ingrediente');
   };
 
   return (
     <section>
       { ingredients.length > 0
       && ingredients.map((ingredient, index) => (
-        <Link
+        <button
+          className="ingredients"
+          type="button"
           data-testid={ `${index}-ingredient-card` }
-          to="/foods"
           key={ uuidv4() }
           onClick={ () => clickLink(ingredient.strIngredient) }
         >
@@ -41,7 +46,7 @@ function FoodsIngredients() {
             alt={ `Imagem de ${ingredient.strIngredient}` }
           />
           <h3 data-testid={ `${index}-card-name` }>{ ingredient.strIngredient }</h3>
-        </Link>
+        </button>
       ))}
     </section>
   );

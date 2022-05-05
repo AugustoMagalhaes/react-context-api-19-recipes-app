@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { getDrinksIngredients } from '../../services/fetchCocktails';
 import Context from '../../context/Context';
@@ -7,6 +7,7 @@ import Context from '../../context/Context';
 function DrinksIngredients() {
   const { setReceivedDrinks } = useContext(Context);
   const [ingredients, setIngredients] = useState([]);
+  const history = useHistory();
   useEffect(() => {
     const fetchApi = async () => {
       const response = await getDrinksIngredients();
@@ -23,17 +24,17 @@ function DrinksIngredients() {
     const data = await response.json();
     const { drinks } = data;
     setReceivedDrinks(drinks);
+    history.push('/drinks');
   };
-
-  console.log(ingredients);
 
   return (
     <section>
       { ingredients.length > 0
       && ingredients.map((ingredient, index) => (
-        <Link
+        <button
+          className="ingredients"
           data-testid={ `${index}-ingredient-card` }
-          to="/drinks"
+          type="button"
           key={ uuidv4() }
           onClick={ () => clickLink(ingredient.strIngredient1) }
         >
@@ -43,7 +44,7 @@ function DrinksIngredients() {
             alt={ `Imagem de ${ingredient.strIngredient1}` }
           />
           <h3 data-testid={ `${index}-card-name` }>{ ingredient.strIngredient1 }</h3>
-        </Link>
+        </button>
       ))}
     </section>
   );
