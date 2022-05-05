@@ -64,3 +64,12 @@ export const getCocktailsRandom = async () => {
   const { drinks } = data;
   return drinks[0].idDrink;
 };
+
+export const getDrinksIngredients = async () => {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+  const response = await fetch(url);
+  const data = await response.json();
+  const { drinks } = data;
+  console.log(drinks);
+  return drinks;
+};

@@ -30,7 +30,9 @@ function DrinksScreen() {
       const { drinks } = data;
       setReceivedDrinks(drinks);
     };
-    fetchRecipe();
+    if (!receivedDrinks.length > 0) {
+      fetchRecipe();
+    }
   }, []);
 
   return (

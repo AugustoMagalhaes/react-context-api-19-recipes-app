@@ -29,7 +29,9 @@ function FoodsScreen() {
       const { meals } = data;
       setReceivedFoods(meals);
     };
-    fetchRecipe();
+    if (!receivedFoods.length > 0) {
+      fetchRecipe();
+    }
   }, []);
 
   return (
