@@ -17,6 +17,13 @@ function Login() {
   const redirectFromLogin = () => {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('inProgressRecipes')) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({}));
+    }
+    localStorage.setItem();
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/foods');
   };

@@ -11,6 +11,11 @@ body {
   padding: 20px;
 }
 
+.cocktail-img {
+  height: 400px;
+  width: 350px;
+}
+
 .buttons button {
   display: flex;
   flex-direction: row;
@@ -20,16 +25,18 @@ body {
 
 .carosel {
   display: flex;
+  height: 350px;
   margin: 20px;
   overflow-x: scroll;
   overflow-y: hidden;
   position: relative;
-  width: 600px;
+  width: 360px;
 }
 
 .carosel img {
   height: 300px;
-  width: 300px;
+  margin-right: 1px;
+  width: 180px;
 }
 
 .startBtn {

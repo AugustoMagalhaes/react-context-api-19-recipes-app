@@ -52,6 +52,7 @@ const DrinkDetailsCard = ({ drink }) => {
         drink={ drink }
         titleTestId="recipe-title"
         imgTestId="recipe-photo"
+        className="cocktail"
       />
 
       <p data-testid="recipe-category">

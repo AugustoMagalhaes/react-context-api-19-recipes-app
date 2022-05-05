@@ -8,6 +8,7 @@ const Cocktail = ({ drink, titleTestId, imgTestId }) => (
       data-testid={ imgTestId }
       src={ drink.strDrinkThumb || ImageNotFound }
       alt={ `Imagem de ${drink.strDrink}` }
+      className="cocktail-img"
     />
     <h3 data-testid={ titleTestId }>
       {drink.strDrink}

@@ -116,7 +116,7 @@ const FoodDetailsCard = ({ food }) => {
               <h4
                 data-testid={ `${index}-recomendation-title` }
               >
-                {rec.strDrinkl}
+                {rec.strDrink}
               </h4>
               <img src={ rec.strDrinkThumb } alt="oi" />
             </section>
