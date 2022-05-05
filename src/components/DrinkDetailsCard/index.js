@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import Cocktail from '../Cocktail';
+import './DetailsCard.css';
 
 const DrinkDetailsCard = ({ drink }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -109,20 +110,30 @@ const DrinkDetailsCard = ({ drink }) => {
         />
       </section>
 
-      <section>
+      <section className="carosel">
         {
           recommended && recommended.map((rec, index) => (
             <section
               key={ uuidv4() }
               data-testid={ `${index}-recomendation-card` }
             >
-              <h4>{rec.strMeal}</h4>
+              <h4
+                data-testid={ `${index}-recomendation-title` }
+              >
+                {rec.strMeal}
+              </h4>
               <img src={ rec.strMealThumb } alt="" />
             </section>
           ))
         }
       </section>
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      <button
+        className="starBtn"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+      </button>
 
     </section>
   );

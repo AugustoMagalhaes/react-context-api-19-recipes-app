@@ -113,7 +113,11 @@ const FoodDetailsCard = ({ food }) => {
               key={ uuidv4() }
               data-testid={ `${index}-recomendation-card` }
             >
-              <h4>{rec.strDrinkl}</h4>
+              <h4
+                data-testid={ `${index}-recomendation-title` }
+              >
+                {rec.strDrinkl}
+              </h4>
               <img src={ rec.strDrinkThumb } alt="oi" />
             </section>
 
@@ -121,7 +125,13 @@ const FoodDetailsCard = ({ food }) => {
         }
 
       </section>
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+      <button
+        className="startBtn"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+      </button>
 
     </section>
   );
