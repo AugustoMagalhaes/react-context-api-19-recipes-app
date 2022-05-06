@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams, useHistory } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
+import shareIcon from '../../images/shareIcon.svg';
 import Cocktail from '../Cocktail';
 import './DetailsCard.css';
 import { fetchRecipeFoods } from '../../services/fetchFoods';
@@ -57,6 +59,12 @@ const DrinkDetailsCard = ({ drink }) => {
 
   const headToProgress = () => history.push(`/drinks/${id}/in-progress`);
 
+  const copyShareLink = () => {
+    console.log(window.location.href);
+    clipboardCopy(window.location.href);
+    global.alert('Link Copied!');
+  };
+
   return (
     <section className="container-details">
       <Cocktail
@@ -77,14 +85,15 @@ const DrinkDetailsCard = ({ drink }) => {
         <button
           type="button"
           data-testid="share-btn"
+          onClick={ () => copyShareLink() }
         >
-          Compartilhar
+          <img src={ shareIcon } alt="Share Recipe" />
         </button>
         <button
           type="button"
           data-testid="favorite-btn"
         >
-          Favoritar
+          Favorite
         </button>
       </div>
       <ul>

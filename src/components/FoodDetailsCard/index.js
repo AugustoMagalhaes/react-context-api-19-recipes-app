@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams, useHistory } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import Meal from '../Meal';
 import './DetailsCard.css';
+import shareIcon from '../../images/shareIcon.svg';
 import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
 import { fetchRecipeDrinks } from '../../services/fetchCocktails';
+import Ingredients from '../Ingredients';
 
 const FoodDetailsCard = ({ food }) => {
-  const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]);
+  /* const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]); */
   const [recommended, setRecommended] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
 
   const { id } = useParams();
   const history = useHistory();
-  useEffect(() => {
+  /* useEffect(() => {
     const foodKeys = Object.keys(food);
     const ingredientsList = foodKeys
       .reduce((acc, key) => {
@@ -34,7 +37,7 @@ const FoodDetailsCard = ({ food }) => {
       }, []);
     setIngredients(ingredientsList);
     setMeasures(measuresList);
-  }, []);
+  }, []); */
 
   useEffect(() => {
     const getSixDrinks = async () => {
@@ -61,6 +64,12 @@ const FoodDetailsCard = ({ food }) => {
     history.push(`/foods/${id}/in-progress`);
   };
 
+  const copyShareLink = () => {
+    console.log(window.location.href);
+    clipboardCopy(window.location.href);
+    global.alert('Link Copied!');
+  };
+
   return (
     <section className="container-details">
       <Meal
@@ -76,8 +85,9 @@ const FoodDetailsCard = ({ food }) => {
         <button
           type="button"
           data-testid="share-btn"
+          onClick={ () => copyShareLink() }
         >
-          Compartilhar
+          <img src={ shareIcon } alt="Share Recipe" />
         </button>
         <button
           type="button"
@@ -86,7 +96,7 @@ const FoodDetailsCard = ({ food }) => {
           Favoritar
         </button>
       </div>
-      <ul>
+      {/* <ul>
         {
           ingredients
             && ingredients.map((item, index) => (
@@ -98,7 +108,8 @@ const FoodDetailsCard = ({ food }) => {
               </li>
             ))
         }
-      </ul>
+      </ul> */}
+      <Ingredients recipe={ food } />
 
       <section>
         <h4>Instructions</h4>
