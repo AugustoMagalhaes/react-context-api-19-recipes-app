@@ -9,12 +9,15 @@ import shareIcon from '../../images/shareIcon.svg';
 import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
 import { fetchRecipeDrinks } from '../../services/fetchCocktails';
 import Ingredients from '../Ingredients';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 const FoodDetailsCard = ({ food }) => {
   const [recommended, setRecommended] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = useParams();
   const history = useHistory();
@@ -54,6 +57,43 @@ const FoodDetailsCard = ({ food }) => {
     }, threeSeconds);
   };
 
+  useEffect(() => {
+    if (localStorage.getItem('favoriteRecipes')) {
+      const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      console.log('getF', getFavorites);
+      const checkIsFavorite = getFavorites.some((recipe) => recipe.id === id);
+      setIsFavorite(checkIsFavorite);
+    }
+  }, []);
+
+  const handleFavorites = () => {
+    const date = new Date();
+    const obj = {
+      id: food.idMeal,
+      type: 'food',
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcooholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb,
+      doneDate: date, // talvez altere
+      tags: food.strTags,
+    };
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes') || '[]';
+    const parsedFavoriteRecipes = JSON.parse(favoriteRecipes);
+    const hasFavorite = parsedFavoriteRecipes.some((recipe) => recipe.id === obj.id);
+    if (!hasFavorite) {
+      const newFavoriteRecipes = JSON.stringify([...parsedFavoriteRecipes, obj]);
+      localStorage.setItem('favoriteRecipes', newFavoriteRecipes);
+    } else {
+      const newFavoriteRecipes = parsedFavoriteRecipes
+        .filter((recipe) => recipe.id !== obj.id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+    }
+    setIsFavorite(!hasFavorite);
+    console.log(localStorage.getItem('favoriteRecipes'));
+  };
+
   return (
     <section className="container-details">
       <Meal
@@ -78,9 +118,13 @@ const FoodDetailsCard = ({ food }) => {
         }
         <button
           type="button"
-          data-testid="favorite-btn"
+          onClick={ () => handleFavorites() }
         >
-          Favoritar
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+            alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
+          />
         </button>
       </div>
       <Ingredients recipe={ food } />

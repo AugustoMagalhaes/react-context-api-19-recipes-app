@@ -8,6 +8,8 @@ import Cocktail from '../Cocktail';
 import './DetailsCard.css';
 import { fetchRecipeFoods } from '../../services/fetchFoods';
 import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
+/* import emptyHeart from '../../images/whiteHeartIcon.svg';
+import fullHeart from '../../images/blackHeartIcon.svg'; */
 
 const DrinkDetailsCard = ({ drink }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -100,6 +102,7 @@ const DrinkDetailsCard = ({ drink }) => {
         <button
           type="button"
           data-testid="favorite-btn"
+          /* onClick={} */
         >
           Favorite
         </button>

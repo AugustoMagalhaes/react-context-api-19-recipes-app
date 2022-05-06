@@ -24,6 +24,9 @@ function Login() {
       localStorage
         .setItem('inProgressRecipes', JSON.stringify({ meals: {}, cocktails: {} }));
     }
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/foods');
   };
