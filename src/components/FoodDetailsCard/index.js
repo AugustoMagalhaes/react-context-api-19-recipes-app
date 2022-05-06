@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Meal from '../Meal';
 import './DetailsCard.css';
 import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
@@ -15,6 +15,7 @@ const FoodDetailsCard = ({ food }) => {
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
 
   const { id } = useParams();
+  const history = useHistory();
   useEffect(() => {
     const foodKeys = Object.keys(food);
     const ingredientsList = foodKeys
@@ -55,6 +56,10 @@ const FoodDetailsCard = ({ food }) => {
     console.log('isDone', isDoneRecipe);
     console.log('isProg', isInProgressRecipe);
   }, []);
+
+  const headToProgress = () => {
+    history.push(`/foods/${id}/in-progress`);
+  };
 
   return (
     <section className="container-details">
@@ -143,6 +148,7 @@ const FoodDetailsCard = ({ food }) => {
             className="startBtn"
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ headToProgress }
           >
             {
               !isInProgressRecipe

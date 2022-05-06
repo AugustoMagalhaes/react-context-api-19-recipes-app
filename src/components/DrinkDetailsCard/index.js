@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Cocktail from '../Cocktail';
 import './DetailsCard.css';
 import { fetchRecipeFoods } from '../../services/fetchFoods';
@@ -14,6 +14,7 @@ const DrinkDetailsCard = ({ drink }) => {
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const { id } = useParams();
+  const history = useHistory();
   useEffect(() => {
     const drinkKeys = Object.keys(drink);
     const ingredientsList = drinkKeys
@@ -53,6 +54,8 @@ const DrinkDetailsCard = ({ drink }) => {
     }
     console.log('isDone', isDoneRecipe);
   }, []);
+
+  const headToProgress = () => history.push(`/drinks/${id}/in-progress`);
 
   return (
     <section className="container-details">
@@ -143,6 +146,7 @@ const DrinkDetailsCard = ({ drink }) => {
             className="startBtn"
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ () => headToProgress() }
           >
             {
               !isInProgressRecipe

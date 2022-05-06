@@ -41,5 +41,6 @@ body {
 
 .startBtn {
   bottom: 0;
+  margin: 100px;
   position: fixed;
 }
