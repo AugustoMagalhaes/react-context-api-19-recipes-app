@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom';
 import Cocktail from '../Cocktail';
 import './DetailsCard.css';
+import { fetchRecipeFoods } from '../../services/fetchFoods';
+import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
 
 const DrinkDetailsCard = ({ drink }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
+  const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
+  const { id } = useParams();
   useEffect(() => {
     const drinkKeys = Object.keys(drink);
     const ingredientsList = drinkKeys
@@ -29,14 +34,6 @@ const DrinkDetailsCard = ({ drink }) => {
     setMeasures(measuresList);
   }, []);
 
-  const fetchRecipeFoods = async () => {
-    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-    const response = await fetch(url);
-    const data = await response.json();
-    const { meals } = data;
-    return meals;
-  };
-
   useEffect(() => {
     const getTwoFoods = async () => {
       const recommendedList = await fetchRecipeFoods();
@@ -47,16 +44,12 @@ const DrinkDetailsCard = ({ drink }) => {
     getTwoFoods();
   }, []);
 
-  const checkIsDone = () => {
-    const getDoneRecipesFromStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-    const findRecipeInStorage = getDoneRecipesFromStorage
-      .some((recipe) => recipe.id.includes(id));
-    setIsDoneRecipe(findRecipeInStorage);
-  };
-
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
-      checkIsDone();
+      checkIsDone(id, setIsDoneRecipe);
+    }
+    if (localStorage.getItem('inProgressRecipes')) {
+      checkIsInProgress(id, setIsInProgressRecipe, 'cocktails');
     }
     console.log('isDone', isDoneRecipe);
   }, []);
@@ -143,13 +136,27 @@ const DrinkDetailsCard = ({ drink }) => {
           ))
         }
       </section>
-      <button
-        className="starBtn"
-        type="button"
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-      </button>
+      {
+        !isDoneRecipe
+        && (
+          <button
+            className="startBtn"
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            {
+              !isInProgressRecipe
+                ? (
+                  'Start Recipe'
+                )
+                : (
+                  'Continue Recipe'
+                )
+            }
+
+          </button>
+        )
+      }
 
     </section>
   );

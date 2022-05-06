@@ -21,7 +21,8 @@ function Login() {
       localStorage.setItem('doneRecipes', JSON.stringify([]));
     }
     if (!localStorage.getItem('inProgressRecipes')) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({}));
+      localStorage
+        .setItem('inProgressRecipes', JSON.stringify({ meals: {}, cocktails: {} }));
     }
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/foods');

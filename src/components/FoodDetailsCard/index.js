@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import Meal from '../Meal';
 import './DetailsCard.css';
+import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
+import { fetchRecipeDrinks } from '../../services/fetchCocktails';
 
 const FoodDetailsCard = ({ food }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -33,14 +35,6 @@ const FoodDetailsCard = ({ food }) => {
     setMeasures(measuresList);
   }, []);
 
-  const fetchRecipeDrinks = async () => {
-    const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    const response = await fetch(url);
-    const data = await response.json();
-    const { drinks } = data;
-    return drinks;
-  };
-
   useEffect(() => {
     const getSixDrinks = async () => {
       const recommendedList = await fetchRecipeDrinks();
@@ -51,30 +45,12 @@ const FoodDetailsCard = ({ food }) => {
     getSixDrinks();
   }, []);
 
-  const checkIsDone = () => {
-    const getDoneRecipesFromStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-    const findRecipeInStorage = getDoneRecipesFromStorage
-      .some((recipe) => recipe.id.includes(id));
-    setIsDoneRecipe(findRecipeInStorage);
-  };
-
-  const checkIsInProgress = () => {
-    const getInProgressRecipesFromStorage = JSON
-      .parse(localStorage.getItem('doneRecipes'));
-    if (getInProgressRecipesFromStorage) {
-      const mealsKeys = getInProgressRecipesFromStorage.meals;
-      const findRecipeInStorage = Object.keys(mealsKeys)
-        .some((recipe) => recipe.includes(id));
-      setIsInProgressRecipe(findRecipeInStorage);
-    }
-  };
-
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
-      checkIsDone();
+      checkIsDone(id, setIsDoneRecipe);
     }
     if (localStorage.getItem('inProgressRecipes')) {
-      checkIsInProgress();
+      checkIsInProgress(id, setIsInProgressRecipe, 'meals');
     }
     console.log('isDone', isDoneRecipe);
     console.log('isProg', isInProgressRecipe);

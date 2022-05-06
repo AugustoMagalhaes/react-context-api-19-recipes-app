@@ -55,3 +55,11 @@ export const getFoodRandom = async () => {
   const { meals } = data;
   return meals[0].idMeal;
 };
+
+export const fetchRecipeFoods = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(url);
+  const data = await response.json();
+  const { meals } = data;
+  return meals;
+};
