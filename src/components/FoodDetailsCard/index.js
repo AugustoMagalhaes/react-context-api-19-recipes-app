@@ -11,33 +11,13 @@ import { fetchRecipeDrinks } from '../../services/fetchCocktails';
 import Ingredients from '../Ingredients';
 
 const FoodDetailsCard = ({ food }) => {
-  /* const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]); */
   const [recommended, setRecommended] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const { id } = useParams();
   const history = useHistory();
-  /* useEffect(() => {
-    const foodKeys = Object.keys(food);
-    const ingredientsList = foodKeys
-      .reduce((acc, key) => {
-        if (key.includes('strIngredient') && food[key]) {
-          acc = [...acc, { ingredient: food[key] }];
-        }
-        return acc;
-      }, []);
-    const measuresList = foodKeys
-      .reduce((acc, key) => {
-        if (key.includes('strMeasure') && food[key]) {
-          acc = [...acc, { measure: food[key] }];
-        }
-        return acc;
-      }, []);
-    setIngredients(ingredientsList);
-    setMeasures(measuresList);
-  }, []); */
 
   useEffect(() => {
     const getSixDrinks = async () => {
@@ -65,9 +45,13 @@ const FoodDetailsCard = ({ food }) => {
   };
 
   const copyShareLink = () => {
-    console.log(window.location.href);
     clipboardCopy(window.location.href);
-    global.alert('Link Copied!');
+    setIsCopied(true);
+    const threeSeconds = 3000;
+    const intervalId = setTimeout(() => {
+      setIsCopied(false);
+      clearTimeout(intervalId);
+    }, threeSeconds);
   };
 
   return (
@@ -85,10 +69,13 @@ const FoodDetailsCard = ({ food }) => {
         <button
           type="button"
           data-testid="share-btn"
-          onClick={ () => copyShareLink() }
+          onClick={ copyShareLink }
         >
           <img src={ shareIcon } alt="Share Recipe" />
         </button>
+        {
+          isCopied && <p>Link copied!</p>
+        }
         <button
           type="button"
           data-testid="favorite-btn"
@@ -96,19 +83,6 @@ const FoodDetailsCard = ({ food }) => {
           Favoritar
         </button>
       </div>
-      {/* <ul>
-        {
-          ingredients
-            && ingredients.map((item, index) => (
-              <li
-                key={ uuidv4() }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${item.ingredient} - ${measures[index].measure}`}
-              </li>
-            ))
-        }
-      </ul> */}
       <Ingredients recipe={ food } />
 
       <section>

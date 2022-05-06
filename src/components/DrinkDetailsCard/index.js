@@ -15,6 +15,7 @@ const DrinkDetailsCard = ({ drink }) => {
   const [recommended, setRecommended] = useState([]);
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const { id } = useParams();
   const history = useHistory();
   useEffect(() => {
@@ -60,9 +61,13 @@ const DrinkDetailsCard = ({ drink }) => {
   const headToProgress = () => history.push(`/drinks/${id}/in-progress`);
 
   const copyShareLink = () => {
-    console.log(window.location.href);
     clipboardCopy(window.location.href);
-    global.alert('Link Copied!');
+    setIsCopied(true);
+    const threeSeconds = 3000;
+    const intervalId = setTimeout(() => {
+      setIsCopied(false);
+      clearTimeout(intervalId);
+    }, threeSeconds);
   };
 
   return (
@@ -89,6 +94,9 @@ const DrinkDetailsCard = ({ drink }) => {
         >
           <img src={ shareIcon } alt="Share Recipe" />
         </button>
+        {
+          isCopied && <p>Link copied!</p>
+        }
         <button
           type="button"
           data-testid="favorite-btn"
