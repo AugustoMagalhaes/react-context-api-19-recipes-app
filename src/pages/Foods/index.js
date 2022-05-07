@@ -28,8 +28,11 @@ function FoodsScreen() {
       const data = await response.json();
       const { meals } = data;
       setReceivedFoods(meals);
+      console.log('Api inicial');
     };
-    fetchRecipe();
+    if (receivedFoods.length === 0) {
+      fetchRecipe();
+    }
   }, [setReceivedFoods]);
 
   return (
