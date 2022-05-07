@@ -22,7 +22,7 @@ function FilterDrinks() {
       setReceivedCategoryDrinks(drinks);
     };
     fetchRecipe();
-  }, []);
+  }, [setReceivedCategoryDrinks]);
 
   const filterButton = async (category) => {
     if (selectedFilter !== category) {

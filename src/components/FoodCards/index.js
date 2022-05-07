@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 import Context from '../../context/Context';
-/* import ImageNotFound from '../../images/ImageNotFound.png'; */
 import './FoodCards.css';
 import Meal from '../Meal';
 

@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
+import Provider from '../context/Provider';
 
 const EMAIL_TEST_ID = 'email-input';
 const PASSWORD_TEST_ID = 'password-input';
@@ -30,5 +31,15 @@ describe('4 - Verificando existencia dos elementos do header na rota "/foods" ',
     expect(profileBtn).toBeInTheDocument();
     expect(pageTitle).toBeInTheDocument();
     expect(searchBtn).toBeInTheDocument();
+  });
+
+  it('10 - testando o render... ', () => {
+    renderWithRouter(
+      <Provider>
+        <App />
+      </Provider>,
+      '/',
+    );
+    expect(window.location.pathname).toBe('/');
   });
 });

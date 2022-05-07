@@ -19,7 +19,7 @@ function FoodsScreen() {
     if (searchFoodsByCategory === false && receivedFoods.length === 1) {
       history.push(`/foods/${receivedFoods[0].idMeal}`);
     }
-  }, [receivedFoods, history]);
+  }, [receivedFoods, history, searchFoodsByCategory]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -33,7 +33,7 @@ function FoodsScreen() {
     if (receivedFoods.length === 0) {
       fetchRecipe();
     }
-  }, []);
+  }, [setReceivedFoods]);
 
   return (
     <div>

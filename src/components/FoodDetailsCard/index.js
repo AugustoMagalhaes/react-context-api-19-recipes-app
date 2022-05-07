@@ -1,50 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
+import { useParams, useHistory } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import Meal from '../Meal';
 import './DetailsCard.css';
+import shareIcon from '../../images/shareIcon.svg';
+import { checkIsDone, checkIsFavorite,
+  checkIsInProgress } from '../../helpers/checkLocalStorage';
+import Ingredients from '../Ingredients';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import Recommended from '../Recommended';
+import handleFavorites from '../../helpers/handleFavorites';
 
 const FoodDetailsCard = ({ food }) => {
-  const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]);
-  const [recommended, setRecommended] = useState([]);
-  useEffect(() => {
-    const foodKeys = Object.keys(food);
-    const ingredientsList = foodKeys
-      .reduce((acc, key) => {
-        if (key.includes('strIngredient') && food[key]) {
-          acc = [...acc, { ingredient: food[key] }];
-        }
-        return acc;
-      }, []);
-    const measuresList = foodKeys
-      .reduce((acc, key) => {
-        if (key.includes('strMeasure') && food[key]) {
-          acc = [...acc, { measure: food[key] }];
-        }
-        return acc;
-      }, []);
-    setIngredients(ingredientsList);
-    setMeasures(measuresList);
-  }, []);
+  const [isDoneRecipe, setIsDoneRecipe] = useState(false);
+  const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const fetchRecipeDrinks = async () => {
-    const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    const response = await fetch(url);
-    const data = await response.json();
-    const { drinks } = data;
-    return drinks;
+  const { id } = useParams();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem('doneRecipes')) {
+      checkIsDone(id, setIsDoneRecipe);
+    }
+    if (localStorage.getItem('inProgressRecipes')) {
+      checkIsInProgress(id, setIsInProgressRecipe, 'meals');
+    }
+    if (localStorage.getItem('favoriteRecipes')) {
+      checkIsFavorite(id, setIsFavorite);
+    }
+  }, [id]);
+
+  const headToProgress = () => {
+    history.push(`/foods/${id}/in-progress`);
   };
 
-  useEffect(() => {
-    const getTwoDrinks = async () => {
-      const recommendedList = await fetchRecipeDrinks();
-      const amount = 6;
-      const recommendedDrinks = recommendedList.slice(0, amount);
-      setRecommended(recommendedDrinks);
-    };
-    getTwoDrinks();
-  }, []);
+  const copyShareLink = () => {
+    clipboardCopy(window.location.href);
+    setIsCopied(true);
+    const threeSeconds = 3000;
+    const intervalId = setTimeout(() => {
+      setIsCopied(false);
+      clearTimeout(intervalId);
+    }, threeSeconds);
+  };
 
   return (
     <section className="container-details">
@@ -61,29 +63,25 @@ const FoodDetailsCard = ({ food }) => {
         <button
           type="button"
           data-testid="share-btn"
+          onClick={ copyShareLink }
         >
-          Compartilhar
+          <img src={ shareIcon } alt="Share Recipe" />
         </button>
+        {
+          isCopied && <p>Link copied!</p>
+        }
         <button
           type="button"
-          data-testid="favorite-btn"
+          onClick={ () => handleFavorites(food, setIsFavorite) }
         >
-          Favoritar
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+            alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
+          />
         </button>
       </div>
-      <ul>
-        {
-          ingredients
-            && ingredients.map((item, index) => (
-              <li
-                key={ uuidv4() }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${item.ingredient} - ${measures[index].measure}`}
-              </li>
-            ))
-        }
-      </ul>
+      <Ingredients recipe={ food } />
 
       <section>
         <h4>Instructions</h4>
@@ -107,21 +105,31 @@ const FoodDetailsCard = ({ food }) => {
       </section>
 
       <section className="carosel">
-        {
-          recommended && recommended.map((rec, index) => (
-            <section
-              key={ uuidv4() }
-              data-testid={ `${index}-recomendation-card` }
-            >
-              <h4>{rec.strDrinkl}</h4>
-              <img src={ rec.strDrinkThumb } alt="oi" />
-            </section>
-
-          ))
-        }
-
+        <Recommended recipeKind="food" />
       </section>
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+
+      {
+        !isDoneRecipe
+        && (
+          <button
+            className="startBtn"
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ headToProgress }
+          >
+            {
+              !isInProgressRecipe
+                ? (
+                  'Start Recipe'
+                )
+                : (
+                  'Continue Recipe'
+                )
+            }
+
+          </button>
+        )
+      }
 
     </section>
   );

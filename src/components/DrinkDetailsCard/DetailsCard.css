@@ -11,7 +11,7 @@ body {
   padding: 20px;
 }
 
-.meal-img {
+.cocktail-img {
   height: 400px;
   width: 350px;
 }
@@ -36,7 +36,6 @@ body {
 .carosel img {
   height: 300px;
   margin-right: 1px;
-  object-fit: contain;
   width: 180px;
 }
 

@@ -8,6 +8,7 @@ const Meal = ({ food, titleTestId, imgTestId }) => (
       data-testid={ imgTestId }
       src={ food.strMealThumb || ImageNotFound }
       alt={ `Imagem de ${food.strMeal}` }
+      className="meal-img"
     />
     <h3 data-testid={ titleTestId }>
       {food.strMeal}

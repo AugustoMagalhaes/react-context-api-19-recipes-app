@@ -20,7 +20,7 @@ function DrinksScreen() {
     if (searchDrinksByCategory === false && receivedDrinks.length === 1) {
       history.push(`/drinks/${receivedDrinks[0].idDrink}`);
     }
-  }, [receivedDrinks, history]);
+  }, [receivedDrinks, history, searchDrinksByCategory]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -30,10 +30,10 @@ function DrinksScreen() {
       const { drinks } = data;
       setReceivedDrinks(drinks);
     };
-    if (!receivedDrinks.length > 0) {
+    if (receivedDrinks.length === 0) {
       fetchRecipe();
     }
-  }, []);
+  }, [setReceivedDrinks]);
 
   return (
     <div>

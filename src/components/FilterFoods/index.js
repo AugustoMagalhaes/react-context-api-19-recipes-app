@@ -27,7 +27,7 @@ function FilterFoods() {
       setReceivedCategoryFoods(meals);
     };
     fetchRecipe();
-  }, []);
+  }, [setReceivedCategoryFoods]);
 
   // const filterButton = async (category) => {
   //   if (selectedFilter !== category) {
