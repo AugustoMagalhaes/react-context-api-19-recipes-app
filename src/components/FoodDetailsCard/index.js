@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Meal from '../Meal';
 import './DetailsCard.css';
@@ -21,6 +21,7 @@ const FoodDetailsCard = ({ food }) => {
 
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -35,6 +36,7 @@ const FoodDetailsCard = ({ food }) => {
   }, [id]);
 
   const headToProgress = () => {
+    setIsInProgressRecipe(true);
     history.push(`/foods/${id}/in-progress`);
   };
 
@@ -109,24 +111,36 @@ const FoodDetailsCard = ({ food }) => {
       </section>
 
       {
-        !isDoneRecipe
+        !isDoneRecipe && !location.pathname.includes('in-progress')
+          && (
+            <button
+              className="startBtn"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ headToProgress }
+            >
+              {
+                !isInProgressRecipe
+                  ? (
+                    'Start Recipe'
+                  )
+                  : (
+                    'Continue Recipe'
+                  )
+              }
+
+            </button>
+          )
+      }
+      {
+        location.pathname.includes('in-progress')
         && (
           <button
-            className="startBtn"
             type="button"
-            data-testid="start-recipe-btn"
-            onClick={ headToProgress }
+            data-testid="finish-recipe-btn"
+            className="finishBtn"
           >
-            {
-              !isInProgressRecipe
-                ? (
-                  'Start Recipe'
-                )
-                : (
-                  'Continue Recipe'
-                )
-            }
-
+            Finish Recipe
           </button>
         )
       }

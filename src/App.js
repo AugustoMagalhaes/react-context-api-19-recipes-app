@@ -18,6 +18,8 @@ import FavoriteRecipesScreen from './pages/FavoriteRecipes';
 import FoodDetailsScreen from './pages/FoodDetails';
 import DrinksDetailsScreen from './pages/DrinksDetails';
 import ExploreDrinksNationalitiesScreen from './pages/DrinksNationalities/index';
+import DrinkInProgressScreen from './pages/DrinkInProgress';
+import FoodInProgressScreen from './pages/FoodInProgress';
 
 function App() {
   return (
@@ -52,6 +54,16 @@ function App() {
           <Route exact path="/explore/foods" component={ ExploreFoodsScreen } />
           <Route exact path="/foods" component={ FoodsScreen } />
           <Route exact path="/drinks" component={ DrinksScreen } />
+          <Route
+            exact
+            path="/drinks/:id/in-progress"
+            component={ DrinkInProgressScreen }
+          />
+          <Route
+            exact
+            path="/foods/:id/in-progress"
+            component={ FoodInProgressScreen }
+          />
           <Route
             exact
             path="/drinks/:id"

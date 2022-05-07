@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../../images/shareIcon.svg';
 import Cocktail from '../Cocktail';
@@ -21,6 +21,7 @@ const DrinkDetailsCard = ({ drink }) => {
 
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -94,7 +95,7 @@ const DrinkDetailsCard = ({ drink }) => {
         </article>
       </section>
 
-      <section>
+      {/* <section>
         <h4>Video</h4>
         <iframe
           data-testid="video"
@@ -105,12 +106,12 @@ const DrinkDetailsCard = ({ drink }) => {
           frameBorder="0"
           allowFullScreen
         />
-      </section>
+      </section> */}
 
       <section className="carosel">
         <Recommended recipeKind="drink" />
       </section>
-      {
+      {/* {
         !isDoneRecipe
         && (
           <button
@@ -129,6 +130,40 @@ const DrinkDetailsCard = ({ drink }) => {
                 )
             }
 
+          </button>
+        )
+      } */}
+      {
+        !isDoneRecipe && !location.pathname.includes('in-progress')
+          && (
+            <button
+              className="startBtn"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ headToProgress }
+            >
+              {
+                !isInProgressRecipe
+                  ? (
+                    'Start Recipe'
+                  )
+                  : (
+                    'Continue Recipe'
+                  )
+              }
+
+            </button>
+          )
+      }
+      {
+        location.pathname.includes('in-progress')
+        && (
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="finishBtn"
+          >
+            Finish Recipe
           </button>
         )
       }

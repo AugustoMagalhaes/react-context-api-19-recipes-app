@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import './Ingredients.css';
+import { useLocation } from 'react-router-dom';
+import IngredientCheckbox from '../IngredientCheckbox';
 
 const Ingredients = ({ recipe }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const location = useLocation();
+  console.log(location.pathname.includes('in-progress'));
 
   useEffect(() => {
     const recipeKeys = Object.keys(recipe);
@@ -27,19 +32,41 @@ const Ingredients = ({ recipe }) => {
   }, [recipe]);
 
   return (
-    <ul>
+    <section>
       {
-        ingredients
-            && ingredients.map((item, index) => (
-              <li
-                key={ uuidv4() }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${item.ingredient} - ${measures[index].measure}`}
-              </li>
-            ))
+        !location.pathname.includes('in-progress')
+          ? (
+            <ul>
+              {
+                ingredients
+          && ingredients.map((item, index) => (
+            <li
+              key={ uuidv4() }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              className="ingredient-item"
+            >
+              {`- ${item.ingredient} - ${measures[index].measure}`}
+            </li>
+          ))
+              }
+            </ul>
+          )
+          : (
+            ingredients
+          && ingredients.map((item, index) => (
+            <p
+              key={ uuidv4() }
+              /* data-testid={ `${index}-ingredient-name-and-measure` } */
+              data-testid={ `${index}-ingredient-step` }
+              className="ingredient-item"
+            >
+              <IngredientCheckbox />
+              { ` ${item.ingredient} x ${measures[index].measure}`}
+            </p>
+          ))
+          )
       }
-    </ul>
+    </section>
   );
 };
 
