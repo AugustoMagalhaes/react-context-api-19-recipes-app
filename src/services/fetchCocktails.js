@@ -64,7 +64,7 @@ export const fetchRecipeDrinks = async () => {
   const data = await response.json();
   const { drinks } = data;
   return drinks;
-}
+};
 
 export const getDrinksIngredients = async () => {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
