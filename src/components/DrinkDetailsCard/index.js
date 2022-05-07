@@ -14,9 +14,6 @@ import Recommended from '../Recommended';
 import handleFavorites from '../../helpers/handleFavorites';
 
 const DrinkDetailsCard = ({ drink }) => {
-  /* const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]); */
-/*   const [recommended, setRecommended] = useState([]); */
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -24,16 +21,6 @@ const DrinkDetailsCard = ({ drink }) => {
 
   const { id } = useParams();
   const history = useHistory();
-
-  /*   useEffect(() => {
-    const getTwoFoods = async () => {
-      const recommendedList = await fetchRecipeFoods();
-      const amount = 6;
-      const recommendedFoods = recommendedList.slice(0, amount);
-      setRecommended(recommendedFoods);
-    };
-    getTwoFoods();
-  }, []); */
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -58,40 +45,6 @@ const DrinkDetailsCard = ({ drink }) => {
       clearTimeout(intervalId);
     }, threeSeconds);
   };
-
-  /*   useEffect(() => {
-    if (localStorage.getItem('favoriteRecipes')) {
-      const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      const checkIsFavorite = getFavorites.some((recipe) => recipe.id === id);
-      setIsFavorite(checkIsFavorite);
-    }
-  }, []); */
-
-  /*   const handleFavorites = () => {
-    const actualRecipe = {
-      id: drink.idDrink,
-      type: 'drink',
-      nationality: drink.strArea || '',
-      category: drink.strCategory,
-      alcoholicOrNot: drink.strAlcoholic,
-      name: drink.strDrink,
-      image: drink.strDrinkThumb,
-    };
-    console.log('actual ', actualRecipe);
-    const favoriteRecipes = localStorage.getItem('favoriteRecipes') || '[]';
-    const parsedFavoriteRecipes = JSON.parse(favoriteRecipes);
-    const hasFavorite = parsedFavoriteRecipes
-      .some((recipe) => recipe.id === actualRecipe.id);
-    if (!hasFavorite) {
-      const newFavoriteRecipes = JSON.stringify([...parsedFavoriteRecipes, actualRecipe]);
-      localStorage.setItem('favoriteRecipes', newFavoriteRecipes);
-    } else {
-      const newFavoriteRecipes = parsedFavoriteRecipes
-        .filter((recipe) => recipe.id !== actualRecipe.id);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
-    }
-    setIsFavorite(!hasFavorite);
-  }; */
 
   return (
     <section className="container-details">

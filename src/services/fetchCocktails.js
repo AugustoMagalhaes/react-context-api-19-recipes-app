@@ -10,13 +10,6 @@ export const getCocktailsByName = async (name) => {
     return [];
   }
   return drinks;
-  /* const data = await response.json();
-  const { drinks } = data;
-  if (!drinks) {
-    global.alert(alertMessage);
-    return [];
-  }
-  return drinks; */
 };
 
 export const getCocktailsByIngredient = async (ingredient) => {
