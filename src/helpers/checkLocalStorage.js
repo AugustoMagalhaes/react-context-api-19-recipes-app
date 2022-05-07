@@ -8,11 +8,16 @@ export const checkIsDone = (urlId, setIsDoneRecipe) => {
 export const checkIsInProgress = (urlId, setIsInProgressRecipe, recipeKey) => {
   const getInProgressRecipesFromStorage = JSON
     .parse(localStorage.getItem('inProgressRecipes'));
-  console.log('get ', getInProgressRecipesFromStorage);
   if (getInProgressRecipesFromStorage) {
     const mealsKeys = getInProgressRecipesFromStorage[recipeKey];
     const findRecipeInStorage = Object.keys(mealsKeys)
       .some((recipe) => recipe.includes(urlId));
-    setIsInProgressRecipe(Number(findRecipeInStorage));
+    setIsInProgressRecipe(findRecipeInStorage);
   }
+};
+
+export const checkIsFavorite = (urlId, setIsFavorite) => {
+  const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const checkRecipeIsFavorite = getFavorites.some((recipe) => recipe.id === urlId);
+  setIsFavorite(checkRecipeIsFavorite);
 };

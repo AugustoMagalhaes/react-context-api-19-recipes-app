@@ -1,46 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams, useHistory } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../../images/shareIcon.svg';
 import Cocktail from '../Cocktail';
 import './DetailsCard.css';
-import { fetchRecipeFoods } from '../../services/fetchFoods';
-import { checkIsDone, checkIsInProgress } from '../../helpers/checkLocalStorage';
-/* import emptyHeart from '../../images/whiteHeartIcon.svg';
-import fullHeart from '../../images/blackHeartIcon.svg'; */
+import { checkIsDone, checkIsInProgress,
+  checkIsFavorite } from '../../helpers/checkLocalStorage';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import Ingredients from '../Ingredients';
+import Recommended from '../Recommended';
+import handleFavorites from '../../helpers/handleFavorites';
 
 const DrinkDetailsCard = ({ drink }) => {
-  const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]);
-  const [recommended, setRecommended] = useState([]);
+  /* const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]); */
+/*   const [recommended, setRecommended] = useState([]); */
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const { id } = useParams();
   const history = useHistory();
-  useEffect(() => {
-    const drinkKeys = Object.keys(drink);
-    const ingredientsList = drinkKeys
-      .reduce((acc, key) => {
-        if (key.includes('strIngredient')) {
-          acc = [...acc, { ingredient: drink[key] }];
-        }
-        return acc;
-      }, []);
-    const measuresList = drinkKeys
-      .reduce((acc, key) => {
-        if (key.includes('strMeasure')) {
-          acc = [...acc, { measure: drink[key] }];
-        }
-        return acc;
-      }, []);
-    setIngredients(ingredientsList);
-    setMeasures(measuresList);
-  }, []);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const getTwoFoods = async () => {
       const recommendedList = await fetchRecipeFoods();
       const amount = 6;
@@ -48,7 +33,7 @@ const DrinkDetailsCard = ({ drink }) => {
       setRecommended(recommendedFoods);
     };
     getTwoFoods();
-  }, []);
+  }, []); */
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -57,8 +42,10 @@ const DrinkDetailsCard = ({ drink }) => {
     if (localStorage.getItem('inProgressRecipes')) {
       checkIsInProgress(id, setIsInProgressRecipe, 'cocktails');
     }
-    console.log('isDone', isDoneRecipe);
-  }, []);
+    if (localStorage.getItem('favoriteRecipes')) {
+      checkIsFavorite(id, setIsFavorite);
+    }
+  }, [id]);
 
   const headToProgress = () => history.push(`/drinks/${id}/in-progress`);
 
@@ -71,6 +58,40 @@ const DrinkDetailsCard = ({ drink }) => {
       clearTimeout(intervalId);
     }, threeSeconds);
   };
+
+  /*   useEffect(() => {
+    if (localStorage.getItem('favoriteRecipes')) {
+      const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const checkIsFavorite = getFavorites.some((recipe) => recipe.id === id);
+      setIsFavorite(checkIsFavorite);
+    }
+  }, []); */
+
+  /*   const handleFavorites = () => {
+    const actualRecipe = {
+      id: drink.idDrink,
+      type: 'drink',
+      nationality: drink.strArea || '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    };
+    console.log('actual ', actualRecipe);
+    const favoriteRecipes = localStorage.getItem('favoriteRecipes') || '[]';
+    const parsedFavoriteRecipes = JSON.parse(favoriteRecipes);
+    const hasFavorite = parsedFavoriteRecipes
+      .some((recipe) => recipe.id === actualRecipe.id);
+    if (!hasFavorite) {
+      const newFavoriteRecipes = JSON.stringify([...parsedFavoriteRecipes, actualRecipe]);
+      localStorage.setItem('favoriteRecipes', newFavoriteRecipes);
+    } else {
+      const newFavoriteRecipes = parsedFavoriteRecipes
+        .filter((recipe) => recipe.id !== actualRecipe.id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+    }
+    setIsFavorite(!hasFavorite);
+  }; */
 
   return (
     <section className="container-details">
@@ -101,25 +122,16 @@ const DrinkDetailsCard = ({ drink }) => {
         }
         <button
           type="button"
-          data-testid="favorite-btn"
-          /* onClick={} */
+          onClick={ () => handleFavorites(drink, setIsFavorite) }
         >
-          Favorite
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+            alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
+          />
         </button>
       </div>
-      <ul>
-        {
-          ingredients
-            && ingredients.map((item, index) => (
-              <li
-                key={ uuidv4() }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${item.ingredient} - ${measures[index].measure}`}
-              </li>
-            ))
-        }
-      </ul>
+      <Ingredients recipe={ drink } />
 
       <section>
         <h4>Instructions</h4>
@@ -143,21 +155,7 @@ const DrinkDetailsCard = ({ drink }) => {
       </section>
 
       <section className="carosel">
-        {
-          recommended && recommended.map((rec, index) => (
-            <section
-              key={ uuidv4() }
-              data-testid={ `${index}-recomendation-card` }
-            >
-              <h4
-                data-testid={ `${index}-recomendation-title` }
-              >
-                {rec.strMeal}
-              </h4>
-              <img src={ rec.strMealThumb } alt="" />
-            </section>
-          ))
-        }
+        <Recommended recipeKind="drink" />
       </section>
       {
         !isDoneRecipe

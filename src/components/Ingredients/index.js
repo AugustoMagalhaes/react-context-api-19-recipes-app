@@ -17,14 +17,14 @@ const Ingredients = ({ recipe }) => {
       }, []);
     const measuresList = recipeKeys
       .reduce((acc, key) => {
-        if (key.includes('strMeasure') && recipe[key]) {
+        if (key.includes('strMeasure')) {
           acc = [...acc, { measure: recipe[key] }];
         }
         return acc;
       }, []);
     setIngredients(ingredientsList);
     setMeasures(measuresList);
-  }, []);
+  }, [recipe]);
 
   return (
     <ul>
