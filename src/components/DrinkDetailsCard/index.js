@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../../images/shareIcon.svg';
 import Cocktail from '../Cocktail';
@@ -18,9 +18,12 @@ const DrinkDetailsCard = ({ drink }) => {
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [disabledFinish, setDisabledFinish] = useState(true);
 
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
+  const IN_PROGRESS = 'in-progress';
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -34,10 +37,20 @@ const DrinkDetailsCard = ({ drink }) => {
     }
   }, [id]);
 
-  const headToProgress = () => history.push(`/drinks/${id}/in-progress`);
+  const headToProgress = () => {
+    setIsInProgressRecipe(true);
+    history.push(`/drinks/${id}/${IN_PROGRESS}`);
+  };
+
+  const headToFinish = () => {
+    setIsDoneRecipe(true);
+    history.push('/done-recipes');
+  };
 
   const copyShareLink = () => {
-    clipboardCopy(window.location.href);
+    const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
+    console.log('urlink', urlLink);
+    clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
     const intervalId = setTimeout(() => {
@@ -84,7 +97,7 @@ const DrinkDetailsCard = ({ drink }) => {
           />
         </button>
       </div>
-      <Ingredients recipe={ drink } />
+      <Ingredients recipe={ drink } setDisabledFinish={ setDisabledFinish } />
 
       <section>
         <h4>Instructions</h4>
@@ -94,7 +107,7 @@ const DrinkDetailsCard = ({ drink }) => {
         </article>
       </section>
 
-      <section>
+      {/* <section>
         <h4>Video</h4>
         <iframe
           data-testid="video"
@@ -105,30 +118,45 @@ const DrinkDetailsCard = ({ drink }) => {
           frameBorder="0"
           allowFullScreen
         />
-      </section>
+      </section> */}
 
       <section className="carosel">
         <Recommended recipeKind="drink" />
       </section>
+
       {
-        !isDoneRecipe
+        !isDoneRecipe && !location.pathname.includes(IN_PROGRESS)
+          && (
+            <button
+              className="startBtn"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ headToProgress }
+            >
+              {
+                !isInProgressRecipe
+                  ? (
+                    'Start Recipe'
+                  )
+                  : (
+                    'Continue Recipe'
+                  )
+              }
+
+            </button>
+          )
+      }
+      {
+        location.pathname.includes(IN_PROGRESS)
         && (
           <button
-            className="startBtn"
             type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => headToProgress() }
+            data-testid="finish-recipe-btn"
+            className="finishBtn"
+            disabled={ disabledFinish }
+            onClick={ headToFinish }
           >
-            {
-              !isInProgressRecipe
-                ? (
-                  'Start Recipe'
-                )
-                : (
-                  'Continue Recipe'
-                )
-            }
-
+            Finish Recipe
           </button>
         )
       }

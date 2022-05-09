@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import './Ingredients.css';
+import { useLocation, useParams } from 'react-router-dom';
+import IngredientCheckbox from '../IngredientCheckbox';
 
-const Ingredients = ({ recipe }) => {
+const Ingredients = ({ recipe, setDisabledFinish }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const location = useLocation();
+  const { id } = useParams();
 
   useEffect(() => {
     const recipeKeys = Object.keys(recipe);
@@ -27,24 +32,43 @@ const Ingredients = ({ recipe }) => {
   }, [recipe]);
 
   return (
-    <ul>
+    <section>
       {
-        ingredients
-            && ingredients.map((item, index) => (
-              <li
-                key={ uuidv4() }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${item.ingredient} - ${measures[index].measure}`}
-              </li>
-            ))
+        !location.pathname.includes('in-progress')
+          ? (
+            <ul>
+              {
+                ingredients
+          && ingredients.map((item, index) => (
+            <li
+              key={ uuidv4() }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              className="ingredient-item"
+            >
+              {`- ${item.ingredient} - ${measures[index].measure}`}
+            </li>
+          ))
+              }
+            </ul>
+          )
+          : (
+            <IngredientCheckbox
+              id={ id }
+              recipeKind={ recipe.idMeal ? 'meals' : 'cocktails' }
+              ingredients={ ingredients }
+              measures={ measures }
+              setDisabledFinish={ setDisabledFinish }
+            />
+          )
+
       }
-    </ul>
+    </section>
   );
 };
 
 Ingredients.propTypes = {
   recipe: PropTypes.shape(PropTypes.shape).isRequired,
+  setDisabledFinish: PropTypes.func.isRequired,
 };
 
 export default Ingredients;
