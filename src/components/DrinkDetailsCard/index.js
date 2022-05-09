@@ -18,10 +18,12 @@ const DrinkDetailsCard = ({ drink }) => {
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [disabledFinish, setDisabledFinish] = useState(true);
 
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const IN_PROGRESS = 'in-progress';
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -35,10 +37,12 @@ const DrinkDetailsCard = ({ drink }) => {
     }
   }, [id]);
 
-  const headToProgress = () => history.push(`/drinks/${id}/in-progress`);
+  const headToProgress = () => history.push(`/drinks/${id}/${IN_PROGRESS}`);
 
   const copyShareLink = () => {
-    clipboardCopy(window.location.href);
+    const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
+    console.log('urlink', urlLink);
+    clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
     const intervalId = setTimeout(() => {
@@ -85,7 +89,7 @@ const DrinkDetailsCard = ({ drink }) => {
           />
         </button>
       </div>
-      <Ingredients recipe={ drink } />
+      <Ingredients recipe={ drink } setDisabledFinish={ setDisabledFinish } />
 
       <section>
         <h4>Instructions</h4>
@@ -134,7 +138,7 @@ const DrinkDetailsCard = ({ drink }) => {
         )
       } */}
       {
-        !isDoneRecipe && !location.pathname.includes('in-progress')
+        !isDoneRecipe && !location.pathname.includes(IN_PROGRESS)
           && (
             <button
               className="startBtn"
@@ -156,12 +160,14 @@ const DrinkDetailsCard = ({ drink }) => {
           )
       }
       {
-        location.pathname.includes('in-progress')
+        location.pathname.includes(IN_PROGRESS)
         && (
           <button
             type="button"
             data-testid="finish-recipe-btn"
             className="finishBtn"
+            disabled={ disabledFinish }
+            onClick={ () => console.log(disabledFinish) }
           >
             Finish Recipe
           </button>

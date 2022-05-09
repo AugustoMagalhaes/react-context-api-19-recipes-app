@@ -18,6 +18,9 @@ const FoodDetailsCard = ({ food }) => {
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [disabledFinish, setDisabledFinish] = useState(true);
+
+  console.log('disabledd ', disabledFinish);
 
   const { id } = useParams();
   const history = useHistory();
@@ -43,6 +46,7 @@ const FoodDetailsCard = ({ food }) => {
 
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
+    console.log('urlink', urlLink);
     clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
@@ -85,7 +89,7 @@ const FoodDetailsCard = ({ food }) => {
           />
         </button>
       </div>
-      <Ingredients recipe={ food } />
+      <Ingredients recipe={ food } setDisabledFinish={ setDisabledFinish } />
 
       <section>
         <h4>Instructions</h4>
@@ -141,6 +145,8 @@ const FoodDetailsCard = ({ food }) => {
             type="button"
             data-testid="finish-recipe-btn"
             className="finishBtn"
+            disabled={ disabledFinish }
+            onClick={ () => console.log(disabledFinish) }
           >
             Finish Recipe
           </button>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
-const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
+const IngredientCheckbox = ({ id, recipeKind, ingredients,
+  measures, setDisabledFinish }) => {
   const [checked, setChecked] = useState([]);
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   console.log('sl check', selectedCheckboxes);
@@ -26,6 +27,12 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
     }
   }, [selectedCheckboxes]);
 
+  useEffect(() => {
+    const checkFullChecked = checked.some((el) => el === false);
+    console.log('check full ', checkFullChecked);
+    setDisabledFinish(checkFullChecked);
+  }, [checked]);
+
   const updateStorage = (newIngredientList) => {
     const getStorage = localStorage.getItem('inProgressRecipes')
       || '{"meals":{}, "cocktails":{}}';
@@ -47,14 +54,6 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
       setSelectedCheckboxes(removeSelected);
     }
   };
-
-  /* <IngredientCheckbox
-                selected={ selectedCheckboxes }
-                setSelected={ setSelectedCheckboxes }
-                name={ item.ingredient }
-                id={ id }
-                recipeKind={ recipe.idMeal ? 'meals' : 'cocktails' }
-              /> */
 
   return (
     ingredients
