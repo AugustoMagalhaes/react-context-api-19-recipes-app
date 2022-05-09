@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
-const IngredientCheckbox = ({ selected, setSelected, name, id, recipeKind }) => {
+const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
   const [checked, setChecked] = useState(false);
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
 
-  useEffect(() => {
-    const checkSelected = selected.includes(name);
-    console.log('checkSel ', selected);
+  /* useEffect(() => {
+    const checkSelected = selectedCheckboxes.includes(name);
+    console.log('checkSel ', selectedCheckboxes);
     setChecked(checkSelected);
-  }, []);
+  }, []); */
 
   const updateStorage = (newIngredientList) => {
     const getStorage = localStorage.getItem('inProgressRecipes')
@@ -20,15 +22,15 @@ const IngredientCheckbox = ({ selected, setSelected, name, id, recipeKind }) => 
     localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
 
-  const onChangeCheckbox = () => {
+  const onChangeCheckbox = ({ target }) => {
     if (checked === false) {
-      const newSelected = [...selected, name];
+      const newSelected = [...selectedCheckboxes, target.name];
       updateStorage(newSelected);
-      setSelected(newSelected);
+      setSelectedCheckboxes(newSelected);
     } else {
-      const removeSelected = selected.filter((el) => el !== name);
+      const removeSelected = selectedCheckboxes.filter((el) => el !== target.name);
       updateStorage(removeSelected);
-      setSelected(removeSelected);
+      setSelectedCheckboxes(removeSelected);
     }
     setChecked(!checked);
   };
@@ -54,12 +56,12 @@ const IngredientCheckbox = ({ selected, setSelected, name, id, recipeKind }) => 
               className={ selectedCheckboxes.indexOf(item.ingredient) >= 0
                 ? 'ingredient-item-checked' : 'ingredient-item' }
             >
-              <label htmlFor="ingredient-checkbox">
+              <label htmlFor={ item.ingredient }>
                 <input
                   type="checkbox"
-                  name="ingredient-checkbox"
-                  id="ingredient-checkbox"
-                  checked={ checked }
+                  name={ item.ingredient }
+                  id={ item.ingredient }
+                  checked={ selectedCheckboxes.includes(item.ingredient) }
                   onChange={ onChangeCheckbox }
                 />
               </label>
@@ -70,11 +72,10 @@ const IngredientCheckbox = ({ selected, setSelected, name, id, recipeKind }) => 
 };
 
 IngredientCheckbox.propTypes = {
-  name: PropTypes.string.isRequired,
-  selected: PropTypes.arrayOf(PropTypes.string),
-  setSelected: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   recipeKind: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape),
+  measures: PropTypes.arrayOf(PropTypes.shape),
 };
 
 IngredientCheckbox.defaultProps = {

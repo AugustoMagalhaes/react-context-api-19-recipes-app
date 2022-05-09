@@ -9,7 +9,6 @@ const Ingredients = ({ recipe }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const location = useLocation();
-  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const Ingredients = ({ recipe }) => {
     setMeasures(measuresList);
   }, [recipe]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const recipeKey = recipe.idMeal ? 'meals' : 'cocktails';
     if (selectedCheckboxes.length === 0) {
       const getStorage = localStorage.getItem('inProgressRecipes')
@@ -41,7 +40,7 @@ const Ingredients = ({ recipe }) => {
       const selectedList = parsedStorage[recipeKey][id];
       setSelectedCheckboxes(selectedList);
     }
-  }, []);
+  }, []); */
 
   return (
     <section>
@@ -64,7 +63,12 @@ const Ingredients = ({ recipe }) => {
             </ul>
           )
           : (
-            <IngredientCheckbox />
+            <IngredientCheckbox
+              id={ id }
+              recipeKind={ recipe.idMeal ? 'meals' : 'cocktails' }
+              ingredients={ ingredients }
+              measures={ measures }
+            />
           )
 
       }
