@@ -22,6 +22,7 @@ const FoodDetailsCard = ({ food }) => {
   const { id } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const IN_PROGRESS = 'in-progress';
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -37,11 +38,12 @@ const FoodDetailsCard = ({ food }) => {
 
   const headToProgress = () => {
     setIsInProgressRecipe(true);
-    history.push(`/foods/${id}/in-progress`);
+    history.push(`/foods/${id}/${IN_PROGRESS}`);
   };
 
   const copyShareLink = () => {
-    clipboardCopy(window.location.href);
+    const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
+    clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
     const intervalId = setTimeout(() => {
@@ -111,7 +113,7 @@ const FoodDetailsCard = ({ food }) => {
       </section>
 
       {
-        !isDoneRecipe && !location.pathname.includes('in-progress')
+        !isDoneRecipe && !location.pathname.includes(IN_PROGRESS)
           && (
             <button
               className="startBtn"
@@ -133,7 +135,7 @@ const FoodDetailsCard = ({ food }) => {
           )
       }
       {
-        location.pathname.includes('in-progress')
+        location.pathname.includes(IN_PROGRESS)
         && (
           <button
             type="button"

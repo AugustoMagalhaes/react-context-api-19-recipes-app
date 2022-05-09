@@ -3,14 +3,28 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState([]);
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  console.log('sl check', selectedCheckboxes);
 
-  /* useEffect(() => {
-    const checkSelected = selectedCheckboxes.includes(name);
-    console.log('checkSel ', selectedCheckboxes);
-    setChecked(checkSelected);
-  }, []); */
+  useEffect(() => {
+    if (selectedCheckboxes.length === 0) {
+      const getStorage = localStorage.getItem('inProgressRecipes')
+      || '{"meals":{}, "cocktails":{}}';
+      const parsedStorage = JSON.parse(getStorage);
+      const selectedList = parsedStorage[recipeKind][id] || [];
+      setSelectedCheckboxes(selectedList);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedCheckboxes && ingredients) {
+      const newChecked = ingredients
+        .map((el) => selectedCheckboxes.includes(el.ingredient));
+      console.log('new checked ', newChecked);
+      setChecked(newChecked);
+    }
+  }, [selectedCheckboxes]);
 
   const updateStorage = (newIngredientList) => {
     const getStorage = localStorage.getItem('inProgressRecipes')
@@ -23,7 +37,7 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
   };
 
   const onChangeCheckbox = ({ target }) => {
-    if (checked === false) {
+    if (!selectedCheckboxes.includes(target.name)) {
       const newSelected = [...selectedCheckboxes, target.name];
       updateStorage(newSelected);
       setSelectedCheckboxes(newSelected);
@@ -32,7 +46,6 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
       updateStorage(removeSelected);
       setSelectedCheckboxes(removeSelected);
     }
-    setChecked(!checked);
   };
 
   /* <IngredientCheckbox
@@ -43,25 +56,20 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients, measures }) => {
                 recipeKind={ recipe.idMeal ? 'meals' : 'cocktails' }
               /> */
 
-  useEffect(() => {
-
-  }, []);
-
   return (
     ingredients
           && ingredients.map((item, index) => (
             <p
               key={ uuidv4() }
               data-testid={ `${index}-ingredient-step` }
-              className={ selectedCheckboxes.indexOf(item.ingredient) >= 0
-                ? 'ingredient-item-checked' : 'ingredient-item' }
+              className={ checked[index] ? 'ingredient-item-checked' : 'ingredient-item' }
             >
               <label htmlFor={ item.ingredient }>
                 <input
                   type="checkbox"
                   name={ item.ingredient }
                   id={ item.ingredient }
-                  checked={ selectedCheckboxes.includes(item.ingredient) }
+                  checked={ checked[index] }
                   onChange={ onChangeCheckbox }
                 />
               </label>
