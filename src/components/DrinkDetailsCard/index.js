@@ -37,7 +37,15 @@ const DrinkDetailsCard = ({ drink }) => {
     }
   }, [id]);
 
-  const headToProgress = () => history.push(`/drinks/${id}/${IN_PROGRESS}`);
+  const headToProgress = () => {
+    setIsInProgressRecipe(true);
+    history.push(`/drinks/${id}/${IN_PROGRESS}`);
+  };
+
+  const headToFinish = () => {
+    setIsDoneRecipe(true);
+    history.push('/done-recipes');
+  };
 
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
@@ -115,28 +123,7 @@ const DrinkDetailsCard = ({ drink }) => {
       <section className="carosel">
         <Recommended recipeKind="drink" />
       </section>
-      {/* {
-        !isDoneRecipe
-        && (
-          <button
-            className="startBtn"
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => headToProgress() }
-          >
-            {
-              !isInProgressRecipe
-                ? (
-                  'Start Recipe'
-                )
-                : (
-                  'Continue Recipe'
-                )
-            }
 
-          </button>
-        )
-      } */}
       {
         !isDoneRecipe && !location.pathname.includes(IN_PROGRESS)
           && (
@@ -167,7 +154,7 @@ const DrinkDetailsCard = ({ drink }) => {
             data-testid="finish-recipe-btn"
             className="finishBtn"
             disabled={ disabledFinish }
-            onClick={ () => console.log(disabledFinish) }
+            onClick={ headToFinish }
           >
             Finish Recipe
           </button>

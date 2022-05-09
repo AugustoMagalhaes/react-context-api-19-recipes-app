@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 
 const IngredientCheckbox = ({ id, recipeKind, ingredients,
   measures, setDisabledFinish }) => {
@@ -56,37 +55,41 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients,
   };
 
   return (
-    ingredients
-          && ingredients.map((item, index) => (
-            <p
-              key={ uuidv4() }
-              data-testid={ `${index}-ingredient-step` }
-              className={ checked[index] ? 'ingredient-item-checked' : 'ingredient-item' }
-            >
-              <label htmlFor={ item.ingredient }>
-                <input
-                  type="checkbox"
-                  name={ item.ingredient }
-                  id={ item.ingredient }
-                  checked={ checked[index] }
-                  onChange={ onChangeCheckbox }
-                />
-              </label>
-              { ` ${item.ingredient} x ${measures[index].measure}`}
-            </p>
-          ))
+    <section className="checkbox-container">
+      {
+        ingredients
+        && ingredients.map((item, index) => (
+
+          <label
+            key={ item.ingredient }
+            htmlFor={ item.ingredient }
+            id={ item.ingredient }
+            data-testid={ `${index}-ingredient-step` }
+            className={ checked[index]
+              ? 'ingredient-item-checked' : 'ingredient-item' }
+          >
+            <input
+              type="checkbox"
+              checked={ !!checked[index] || false }
+              name={ item.ingredient }
+              id={ item.ingredient }
+              onChange={ onChangeCheckbox }
+            />
+            { ` ${item.ingredient} x ${measures[index].measure}`}
+          </label>
+        ))
+      }
+
+    </section>
   );
 };
 
 IngredientCheckbox.propTypes = {
   id: PropTypes.string.isRequired,
   recipeKind: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.shape),
-  measures: PropTypes.arrayOf(PropTypes.shape),
-};
-
-IngredientCheckbox.defaultProps = {
-  selected: [],
+  ingredients: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  measures: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  setDisabledFinish: PropTypes.func.isRequired,
 };
 
 export default IngredientCheckbox;

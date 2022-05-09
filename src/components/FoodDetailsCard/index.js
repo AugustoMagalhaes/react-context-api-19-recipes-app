@@ -44,6 +44,11 @@ const FoodDetailsCard = ({ food }) => {
     history.push(`/foods/${id}/${IN_PROGRESS}`);
   };
 
+  const headToFinish = () => {
+    setIsDoneRecipe(true);
+    history.push('/done-recipes');
+  };
+
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
     console.log('urlink', urlLink);
@@ -146,7 +151,7 @@ const FoodDetailsCard = ({ food }) => {
             data-testid="finish-recipe-btn"
             className="finishBtn"
             disabled={ disabledFinish }
-            onClick={ () => console.log(disabledFinish) }
+            onClick={ headToFinish }
           >
             Finish Recipe
           </button>

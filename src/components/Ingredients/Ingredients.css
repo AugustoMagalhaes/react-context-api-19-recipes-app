@@ -1,8 +1,17 @@
 .ingredient-item {
   list-style: none;
+  text-decoration: none solid black;
 }
 
 .ingredient-item-checked {
   list-style: none;
-  text-decoration: line-through;
+  text-decoration: line-through solid black;
 }
+
+.checkbox-container {
+  margin: 20px;
+}
+
+/* input:checked {
+  text-decoration: line-through solid black;
+} */
