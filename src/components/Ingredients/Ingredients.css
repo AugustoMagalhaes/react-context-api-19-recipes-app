@@ -1,3 +1,8 @@
 .ingredient-item {
   list-style: none;
 }
+
+.ingredient-item-checked {
+  list-style: none;
+  text-decoration: line-through;
+}

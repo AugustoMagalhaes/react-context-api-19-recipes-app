@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import './Ingredients.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import IngredientCheckbox from '../IngredientCheckbox';
 
 const Ingredients = ({ recipe }) => {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const location = useLocation();
-  console.log(location.pathname.includes('in-progress'));
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
     const recipeKeys = Object.keys(recipe);
@@ -30,6 +31,17 @@ const Ingredients = ({ recipe }) => {
     setIngredients(ingredientsList);
     setMeasures(measuresList);
   }, [recipe]);
+
+  useEffect(() => {
+    const recipeKey = recipe.idMeal ? 'meals' : 'cocktails';
+    if (selectedCheckboxes.length === 0) {
+      const getStorage = localStorage.getItem('inProgressRecipes')
+      || '{"meals":{}, "cocktails":{}}';
+      const parsedStorage = JSON.parse(getStorage);
+      const selectedList = parsedStorage[recipeKey][id];
+      setSelectedCheckboxes(selectedList);
+    }
+  }, []);
 
   return (
     <section>
@@ -52,19 +64,9 @@ const Ingredients = ({ recipe }) => {
             </ul>
           )
           : (
-            ingredients
-          && ingredients.map((item, index) => (
-            <p
-              key={ uuidv4() }
-              /* data-testid={ `${index}-ingredient-name-and-measure` } */
-              data-testid={ `${index}-ingredient-step` }
-              className="ingredient-item"
-            >
-              <IngredientCheckbox />
-              { ` ${item.ingredient} x ${measures[index].measure}`}
-            </p>
-          ))
+            <IngredientCheckbox />
           )
+
       }
     </section>
   );
