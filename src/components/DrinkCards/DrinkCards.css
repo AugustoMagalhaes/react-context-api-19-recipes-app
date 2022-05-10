@@ -18,25 +18,25 @@ main {
   border: 2px solid orange;
   display: flex;
   flex-flow: column nowrap;
-  height: 450px;
+  height: 350px;
   justify-content: space-between;
   margin: 20px;
   padding: 20px;
-  width: 400px;
+  width: 300px;
 }
 
 .drink-card img {
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  width: 200px;
 }
 
 .drink-card:hover {
   background-color: rgb(219, 216, 216);
 }
 
-.drink-card h4 {
+.drink-card h3 {
   color: rgb(68, 67, 67);
-  margin-top: 0.5em;
+  margin-top: 1.5em;
   text-align: center;
   text-decoration: none;
 }

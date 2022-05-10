@@ -6,6 +6,7 @@ import { getFoodsNationalities } from '../../services/fetchFoods';
 import Context from '../../context/Context';
 import FoodCards from '../../components/FoodCards';
 import FilterFoods from '../../components/FilterFoods/index';
+import './ExploreNationalities.css';
 
 function ExploreNationalitiesScreen() {
   const [nationalities, setNationalities] = useState([]);
@@ -53,7 +54,7 @@ function ExploreNationalitiesScreen() {
   return (
     <div>
       <Header pageTitle={ pageTitle } hasSearch={ hasSearch } />
-      <section>
+      <section className="containerNat">
         <select
           data-testid="explore-by-nationality-dropdown"
           onChange={ (e) => setSelectedNat(e.target.value) }
@@ -74,8 +75,8 @@ function ExploreNationalitiesScreen() {
             </option>
           ))}
         </select>
+        <FilterFoods />
       </section>
-      <FilterFoods />
       <FoodCards />
       <Footer />
     </div>

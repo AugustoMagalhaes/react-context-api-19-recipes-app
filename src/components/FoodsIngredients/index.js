@@ -30,7 +30,7 @@ function FoodsIngredients() {
   };
 
   return (
-    <section>
+    <section className="containerIng">
       { ingredients.length > 0
       && ingredients.map((ingredient, index) => (
         <button

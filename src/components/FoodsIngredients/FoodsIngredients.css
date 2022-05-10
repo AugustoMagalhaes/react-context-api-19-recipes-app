@@ -1,5 +1,21 @@
+.containerIng {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+.containerIng h3 {
+  font-size: medium;
+  margin-top: 0.5em;
+}
+
 .ingredients {
   background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
   border: none;
-  margin: 20px;
+  color: rgb(67, 66, 66);
+  margin-left: 20px;
+  margin-right: 20px;
 }
+
