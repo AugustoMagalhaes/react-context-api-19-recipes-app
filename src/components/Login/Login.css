@@ -4,11 +4,27 @@ body {
   padding: 0;
 }
 
+@keyframes backgroudAnimation {
+
+  0% { background-position: left; }
+
+  50% { background-position: right; }
+
+  100% { background-position: left; }
+
+}
+
 form {
   align-items: center;
+  animation-delay: 1s;
+  animation-duration: 60s;
+  animation-name: backgroudAnimation;
+  background-image: url('../../images/login.png');
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 640px;
   justify-content: center;
 }
 
@@ -19,4 +35,8 @@ form input, button {
 form button {
   border-radius: 5px;
   width: 100px;
+}
+
+form img {
+  width: 200px;
 }

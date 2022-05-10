@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 import './Login.css';
+import logo from '../../images/App.png';
 
 function Login() {
   const {
@@ -42,7 +43,7 @@ function Login() {
   return (
     <section>
       <form>
-        <h2>Login</h2>
+        <img src={ logo } alt="Logo App de Receitas" />
         <input
           data-testid="email-input"
           name="email"
