@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import Meal from '../Meal';
 import './DetailsCard.css';
@@ -18,9 +18,14 @@ const FoodDetailsCard = ({ food }) => {
   const [isInProgressRecipe, setIsInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [disabledFinish, setDisabledFinish] = useState(true);
+
+  console.log('disabledd ', disabledFinish);
 
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
+  const IN_PROGRESS = 'in-progress';
 
   useEffect(() => {
     if (localStorage.getItem('doneRecipes')) {
@@ -35,11 +40,19 @@ const FoodDetailsCard = ({ food }) => {
   }, [id]);
 
   const headToProgress = () => {
-    history.push(`/foods/${id}/in-progress`);
+    setIsInProgressRecipe(true);
+    history.push(`/foods/${id}/${IN_PROGRESS}`);
+  };
+
+  const headToFinish = () => {
+    setIsDoneRecipe(true);
+    history.push('/done-recipes');
   };
 
   const copyShareLink = () => {
-    clipboardCopy(window.location.href);
+    const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
+    console.log('urlink', urlLink);
+    clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
     const intervalId = setTimeout(() => {
@@ -81,7 +94,7 @@ const FoodDetailsCard = ({ food }) => {
           />
         </button>
       </div>
-      <Ingredients recipe={ food } />
+      <Ingredients recipe={ food } setDisabledFinish={ setDisabledFinish } />
 
       <section>
         <h4>Instructions</h4>
@@ -109,24 +122,38 @@ const FoodDetailsCard = ({ food }) => {
       </section>
 
       {
-        !isDoneRecipe
+        !isDoneRecipe && !location.pathname.includes(IN_PROGRESS)
+          && (
+            <button
+              className="startBtn"
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ headToProgress }
+            >
+              {
+                !isInProgressRecipe
+                  ? (
+                    'Start Recipe'
+                  )
+                  : (
+                    'Continue Recipe'
+                  )
+              }
+
+            </button>
+          )
+      }
+      {
+        location.pathname.includes(IN_PROGRESS)
         && (
           <button
-            className="startBtn"
             type="button"
-            data-testid="start-recipe-btn"
-            onClick={ headToProgress }
+            data-testid="finish-recipe-btn"
+            className="finishBtn"
+            disabled={ disabledFinish }
+            onClick={ headToFinish }
           >
-            {
-              !isInProgressRecipe
-                ? (
-                  'Start Recipe'
-                )
-                : (
-                  'Continue Recipe'
-                )
-            }
-
+            Finish Recipe
           </button>
         )
       }
