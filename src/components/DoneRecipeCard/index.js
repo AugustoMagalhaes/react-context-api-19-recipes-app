@@ -47,12 +47,8 @@ const DoneRecipeCard = ({ recipe, index }) => {
 };
 
 DoneRecipeCard.propTypes = {
-  recipe: PropTypes.shape(PropTypes.any),
+  recipe: PropTypes.shape(PropTypes.any).isRequired,
   index: PropTypes.number.isRequired,
-};
-
-DoneRecipeCard.defaultProps = {
-  recipe: {},
 };
 
 export default DoneRecipeCard;
