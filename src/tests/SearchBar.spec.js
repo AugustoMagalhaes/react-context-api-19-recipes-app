@@ -8,7 +8,6 @@ import * as API from '../services/fetchFoods';
 const mealsByIngredient = require('../../cypress/mocks/mealsByIngredient');
 const soupMeals = require('../../cypress/mocks/soupMeals');
 const meals = require('../../cypress/mocks/meals');
-const mealCategories = require('../../cypress/mocks/mealCategories');
 
 const BTN_SEARCH_OPEN = 'search-top-btn';
 const INPUT_SEARCH = 'search-input';
