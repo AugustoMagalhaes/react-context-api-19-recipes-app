@@ -38,6 +38,7 @@ const DrinkDetailsCard = ({ drink }) => {
   }, [id]);
 
   const headToProgress = () => {
+    // passar aqui
     setIsInProgressRecipe(true);
     history.push(`/drinks/${id}/${IN_PROGRESS}`);
   };
