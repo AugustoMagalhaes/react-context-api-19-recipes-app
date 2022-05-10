@@ -12,6 +12,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import Ingredients from '../Ingredients';
 import Recommended from '../Recommended';
 import handleFavorites from '../../helpers/handleFavorites';
+import { sendToStorage } from '../../helpers/handleFinishedRecipes';
 
 const DrinkDetailsCard = ({ drink }) => {
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
@@ -38,19 +39,18 @@ const DrinkDetailsCard = ({ drink }) => {
   }, [id]);
 
   const headToProgress = () => {
-    // passar aqui
     setIsInProgressRecipe(true);
     history.push(`/drinks/${id}/${IN_PROGRESS}`);
   };
 
   const headToFinish = () => {
+    sendToStorage(drink);
     setIsDoneRecipe(true);
     history.push('/done-recipes');
   };
 
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
-    console.log('urlink', urlLink);
     clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;

@@ -9,14 +9,16 @@ const DoneRecipes = () => {
 
   useEffect(() => {
     const storagedDoneRecipes = localStorage.getItem('doneRecipes');
+    console.log('storagedDoneRecipes', storagedDoneRecipes);
     if (storagedDoneRecipes) {
       const parsedStorage = JSON.parse(storagedDoneRecipes);
-      const filterFoods = parsedStorage.filter((el) => el.type.includes('meal'));
+      const filterFoods = parsedStorage.filter((el) => el.type.includes('food'));
       const filterDrinks = parsedStorage.filter((el) => el.type.includes('drink'));
       setFoodState(filterFoods);
       setDrinkState(filterDrinks);
-      setAllState([filterFoods, filterDrinks]);
+      setAllState([...filterFoods, ...filterDrinks]);
       console.log(foodState, drinkState, allState);
+      console.log('parsedStorage', filterFoods);
     }
   }, []);
 

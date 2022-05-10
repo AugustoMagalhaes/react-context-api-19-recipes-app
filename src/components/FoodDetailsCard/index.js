@@ -12,6 +12,7 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import Recommended from '../Recommended';
 import handleFavorites from '../../helpers/handleFavorites';
+import { sendToStorage } from '../../helpers/handleFinishedRecipes';
 
 const FoodDetailsCard = ({ food }) => {
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
@@ -19,8 +20,6 @@ const FoodDetailsCard = ({ food }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [disabledFinish, setDisabledFinish] = useState(true);
-
-  console.log('disabledd ', disabledFinish);
 
   const { id } = useParams();
   const history = useHistory();
@@ -45,13 +44,13 @@ const FoodDetailsCard = ({ food }) => {
   };
 
   const headToFinish = () => {
+    sendToStorage(food);
     setIsDoneRecipe(true);
     history.push('/done-recipes');
   };
 
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
-    console.log('urlink', urlLink);
     clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;

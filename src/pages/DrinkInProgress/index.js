@@ -1,12 +1,8 @@
 import React from 'react';
 import DrinksDetails from '../../components/DrinksDetails';
 
-const DrinkInProgressScreen = () => {
-  console.log('aaa');
-
-  return (
-    <DrinksDetails />
-  );
-};
+const DrinkInProgressScreen = () => (
+  <DrinksDetails />
+);
 
 export default DrinkInProgressScreen;

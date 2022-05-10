@@ -3,13 +3,9 @@ import React from 'react';
 /* import { useLocation, useParams } from 'react-router-dom'; */
 import FoodDetails from '../../components/FoodDetails';
 
-const FoodInProgressScreen = () => {
-  console.log('aaa');
-
-  return (
-    <FoodDetails />
-  );
-};
+const FoodInProgressScreen = () => (
+  <FoodDetails />
+);
 
 /* FoodInProcessScreen.propTypes = {
   food: PropTypes.shape(PropTypes.shape),
