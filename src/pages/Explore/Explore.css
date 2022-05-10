@@ -21,12 +21,12 @@ body {
 
   from { background-color: rgb(219, 216, 216);}
 
-  to { background-color: #fd7e14;}
+  to { background-color: rgb(255, 105, 0);}
 
 }
 
 .containerExplore button:hover {
   animation-duration: 2s;
   animation-name: animation;
-  background-color: #fd7e14;
+  background-color: rgb(255, 105, 0);
 }

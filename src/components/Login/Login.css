@@ -29,6 +29,9 @@ form {
 }
 
 form input, button {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px 0;
   margin-top: 20px;
 }
 
@@ -38,5 +41,6 @@ form button {
 }
 
 form img {
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
   width: 200px;
 }

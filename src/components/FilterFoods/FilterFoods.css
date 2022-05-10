@@ -15,3 +15,16 @@ button {
   border: none;
   width: 8em;
 }
+
+@keyframes animation {
+
+  from { background-color: rgb(219, 216, 216);}
+
+  to { background-color: rgb(255, 105, 0);}
+
+}
+
+.container button:hover {
+  animation-duration: 2s;
+  animation-name: animation;
+}
