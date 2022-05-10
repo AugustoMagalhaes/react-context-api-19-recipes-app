@@ -20,6 +20,24 @@ body {
   text-align: center;
 }
 
+.category-icons {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  width: 55%;
+}
+
+.category-icons p {
+  margin-bottom: 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 20px;
+}
+
 .buttons button {
   background-color: white;
   display: flex;
@@ -63,13 +81,14 @@ body {
 .startBtn:hover {
   animation-duration: 2s;
   animation-name: animation;
+}
 
 .finishBtn {
   bottom: 0;
   margin-top: 100px;
   position: fixed;
 }
-  
+
 .finishBtn:hover {
   animation-duration: 2s;
   animation-name: animation;

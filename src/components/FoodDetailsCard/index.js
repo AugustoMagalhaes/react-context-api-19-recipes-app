@@ -68,31 +68,32 @@ const FoodDetailsCard = ({ food }) => {
         titleTestId="recipe-title"
         imgTestId="recipe-photo"
       />
-
-      <p data-testid="recipe-category">
-        {food.strCategory}
-      </p>
-      <div className="buttons">
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ copyShareLink }
-        >
-          <img src={ shareIcon } alt="Share Recipe" />
-        </button>
-        {
-          isCopied && <p>Link copied!</p>
-        }
-        <button
-          type="button"
-          onClick={ () => handleFavorites(food, setIsFavorite) }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-            alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
-          />
-        </button>
+      <div className="category-icons">
+        <p data-testid="recipe-category">
+          {food.strCategory}
+        </p>
+        <div className="buttons">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ copyShareLink }
+          >
+            <img src={ shareIcon } alt="Share Recipe" />
+          </button>
+          {
+            isCopied && <p>Link copied!</p>
+          }
+          <button
+            type="button"
+            onClick={ () => handleFavorites(food, setIsFavorite) }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
+            />
+          </button>
+        </div>
       </div>
       <Ingredients recipe={ food } setDisabledFinish={ setDisabledFinish } />
 

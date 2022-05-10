@@ -48,7 +48,7 @@ function Header({ pageTitle, hasSearch }) {
           ) : null }
       </section>
 
-      <section className="searchBar">
+      <section>
         <SearchBar displaySearchBar={ displaySearchBar } />
       </section>
     </header>

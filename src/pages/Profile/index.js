@@ -1,24 +1,9 @@
-/* import React from 'react';
-import Header from '../../components/Header/index';
-import Footer from '../../components/Footer/index';
-
-function ProfileScreen() {
-  const pageTitle = 'Profile';
-  return (
-    <div>
-      <Header pageTitle={ pageTitle } hasSearch={ false } />
-      <Footer />
-    </div>
-  );
-}
-
-export default ProfileScreen; */
-
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header/index';
 import Footer from '../../components/Footer/index';
 import './Profile.css';
+import avatar1 from '../../images/avatar/profile6.gif';
 
 function ProfileScreen() {
   const [getEmail, setGetEmail] = useState({});
@@ -42,6 +27,7 @@ function ProfileScreen() {
     <div>
       <Header pageTitle={ pageTitle } hasSearch={ false } />
       <section className="containerProfile">
+        <img src={ avatar1 } alt="imagem avatar" />
         <h3 data-testid="profile-email">{getEmail.email}</h3>
         <button
           type="button"

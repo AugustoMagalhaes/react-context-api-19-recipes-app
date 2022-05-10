@@ -13,9 +13,16 @@
 
 .ingredients {
   background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
-  border: none;
+  border: 2px solid orange;
+  box-shadow: rgb(134, 134, 134) 0 5px 5px 0;
   color: rgb(67, 66, 66);
+  height: 200px;
   margin-left: 20px;
   margin-right: 20px;
+  width: 200px;
+}
+
+.ingredients:hover {
+  background-color: rgb(219, 216, 216);
 }
 
