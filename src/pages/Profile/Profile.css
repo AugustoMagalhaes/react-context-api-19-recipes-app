@@ -4,6 +4,14 @@ body {
   padding: 0;
 }
 
+@keyframes animation {
+
+  from { background-color: rgb(219, 216, 216);}
+
+  to { background-color: #fd7e14;}
+
+}
+
 .containerProfile {
   align-items: center;
   display: flex;
@@ -23,5 +31,6 @@ body {
 }
 
 .containerProfile button:hover {
-  background-color: #fd7e14;
+  animation-duration: 2s;
+  animation-name: animation;
 }
