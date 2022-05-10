@@ -67,35 +67,36 @@ const DrinkDetailsCard = ({ drink }) => {
         imgTestId="recipe-photo"
         className="cocktail"
       />
-
-      <p data-testid="recipe-category">
-        {drink.strCategory}
-        {' '}
-        {'('}
-        {drink.strAlcoholic}
-        {')'}
-      </p>
-      <div className="buttons">
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ () => copyShareLink() }
-        >
-          <img src={ shareIcon } alt="Share Recipe" />
-        </button>
-        {
-          isCopied && <p>Link copied!</p>
-        }
-        <button
-          type="button"
-          onClick={ () => handleFavorites(drink, setIsFavorite) }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-            alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
-          />
-        </button>
+      <div className="category-icons">
+        <p data-testid="recipe-category">
+          {drink.strCategory}
+          {' '}
+          {'('}
+          {drink.strAlcoholic}
+          {')'}
+        </p>
+        <div className="buttons">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ () => copyShareLink() }
+          >
+            <img src={ shareIcon } alt="Share Recipe" />
+          </button>
+          {
+            isCopied && <p>Link copied!</p>
+          }
+          <button
+            type="button"
+            onClick={ () => handleFavorites(drink, setIsFavorite) }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
+            />
+          </button>
+        </div>
       </div>
       <Ingredients recipe={ drink } setDisabledFinish={ setDisabledFinish } />
 

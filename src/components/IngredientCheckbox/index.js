@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import './ingredientCheckbox.css';
 
 const IngredientCheckbox = ({ id, recipeKind, ingredients,
   measures, setDisabledFinish }) => {

@@ -9,6 +9,8 @@ main {
 .food-card {
   align-items: center;
   border: 2px solid orange;
+  border-radius: 15px;
+  box-shadow: rgb(134, 134, 134) 0 5px 10px 0;
   display: flex;
   flex-flow: column nowrap;
   height: 350px;
@@ -18,13 +20,23 @@ main {
   width: 300px;
 }
 
+.food-card section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .food-card img {
+  border-radius: 15px;
+  box-shadow: rgb(134, 134, 134) 0 5px 10px 0;
   height: 200px;
   width: 200px;
 }
 
 .food-card h3 {
   color: rgb(68, 67, 67);
+  font-size: larger;
   margin-top: 1.5em;
   text-align: center;
 }
