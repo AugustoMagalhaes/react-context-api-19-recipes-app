@@ -30,8 +30,22 @@ body {
   width: 200px;
 }
 
+.avatar button {
+  background-color: white;
+  width: 50px;
+}
+
 .containerProfile button:hover {
   animation-duration: 2s;
   animation-name: animation;
 }
 
+
+.avatar button:hover {
+  animation: none;
+}
+
+.avatar {
+  align-items: center;
+  display: flex;
+}
