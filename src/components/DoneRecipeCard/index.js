@@ -34,7 +34,6 @@ const DoneRecipeCard = ({ recipe, index }) => {
         <button
           type="button"
           onClick={ () => copyShareLink() }
-          data-testid={ `${index}-horizontal-share-btn` }
         >
           <img
             data-testid={ `${index}-horizontal-share-btn` }
