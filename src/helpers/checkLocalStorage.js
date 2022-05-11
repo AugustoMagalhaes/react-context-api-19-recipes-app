@@ -16,8 +16,8 @@ export const checkIsInProgress = (urlId, setIsInProgressRecipe, recipeKey) => {
   }
 };
 
-export const checkIsFavorite = (urlId, setIsFavorite) => {
+export const checkIsFavorite = (itemId, setIsFavorite) => {
   const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  const checkRecipeIsFavorite = getFavorites.some((recipe) => recipe.id === urlId);
+  const checkRecipeIsFavorite = getFavorites.some((recipe) => recipe.id === itemId);
   setIsFavorite(checkRecipeIsFavorite);
 };
