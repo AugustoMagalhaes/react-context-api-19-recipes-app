@@ -7,9 +7,8 @@ import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import { checkIsFavorite } from '../../helpers/checkLocalStorage';
-import handleFavorites from '../../helpers/handleFavorites';
 
-const DoneRecipeCard = ({ recipe, index }) => {
+const DoneAndFavoriteRecipeCard = ({ recipe, index, setAllState }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(true);
   const location = useLocation();
@@ -26,6 +25,17 @@ const DoneRecipeCard = ({ recipe, index }) => {
       setIsCopied(false);
       clearTimeout(intervalId);
     }, threeSeconds);
+  };
+
+  const removeFavoriteRecipes = () => {
+    const favoriteStorage = localStorage.getItem('favoriteRecipes');
+    if (favoriteStorage) {
+      const parsedFavorites = JSON.parse(favoriteStorage);
+      const newFavorites = parsedFavorites.filter((el) => el.id !== recipe.id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+      setAllState(newFavorites);
+    }
+    setIsFavorite(!isFavorite);
   };
 
   useEffect(() => {
@@ -66,7 +76,7 @@ const DoneRecipeCard = ({ recipe, index }) => {
           && (
             <button
               type="button"
-              onClick={ () => handleFavorites(recipe, setIsFavorite) }
+              onClick={ () => removeFavoriteRecipes() }
             >
               <img
                 src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
@@ -119,9 +129,14 @@ const DoneRecipeCard = ({ recipe, index }) => {
   );
 };
 
-DoneRecipeCard.propTypes = {
-  recipe: PropTypes.shape(PropTypes.any).isRequired,
+DoneAndFavoriteRecipeCard.propTypes = {
+  recipe: PropTypes.shape(PropTypes.any),
   index: PropTypes.number.isRequired,
+  setAllState: PropTypes.func.isRequired,
 };
 
-export default DoneRecipeCard;
+DoneAndFavoriteRecipeCard.defaultProps = {
+  recipe: {},
+};
+
+export default DoneAndFavoriteRecipeCard;

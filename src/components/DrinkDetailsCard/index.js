@@ -108,19 +108,6 @@ const DrinkDetailsCard = ({ drink }) => {
         </article>
       </section>
 
-      {/* <section>
-        <h4>Video</h4>
-        <iframe
-          data-testid="video"
-          width={ 600 }
-          height={ 400 }
-          title={ `${drink.strDrink}'s video` }
-          src={ drink.strYoutube }
-          frameBorder="0"
-          allowFullScreen
-        />
-      </section> */}
-
       <section className="carosel">
         <Recommended recipeKind="drink" />
       </section>

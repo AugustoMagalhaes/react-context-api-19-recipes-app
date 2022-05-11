@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header/index';
-import DoneRecipes from '../../components/DoneRecipes';
+import DoneAndFavoriteRecipes from '../../components/DoneAndFavoriteRecipes';
 
 function DoneRecipesScreen() {
   const pageTitle = 'Done Recipes ';
@@ -9,7 +9,7 @@ function DoneRecipesScreen() {
     <main>
       <section>
         <Header pageTitle={ pageTitle } hasSearch={ hasSearch } />
-        <DoneRecipes />
+        <DoneAndFavoriteRecipes />
       </section>
     </main>
   );

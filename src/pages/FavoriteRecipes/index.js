@@ -1,14 +1,16 @@
 import React from 'react';
 import Header from '../../components/Header/index';
-import DoneRecipes from '../../components/DoneRecipes';
+import DoneAndFavoriteRecipes from '../../components/DoneAndFavoriteRecipes';
 
 function FavoriteRecipesScreen() {
   const pageTitle = 'Favorite Recipes';
   return (
-    <>
-      <Header pageTitle={ pageTitle } hasSearch={ false } />
-      <DoneRecipes />
-    </>
+    <main>
+      <section>
+        <Header pageTitle={ pageTitle } hasSearch={ false } />
+        <DoneAndFavoriteRecipes />
+      </section>
+    </main>
   );
 }
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './DoneRecipes.css';
 import { useLocation } from 'react-router-dom';
-import DoneRecipeCard from '../DoneRecipeCard';
+import DoneAndFavoriteRecipeCard from '../DoneAndFavoriteRecipeCard';
 
-const DoneRecipes = () => {
+const DoneAndFavoriteRecipes = () => {
   const [foodState, setFoodState] = useState([]);
   const [drinkState, setDrinkState] = useState([]);
   const [allState, setAllState] = useState([]);
@@ -11,7 +11,6 @@ const DoneRecipes = () => {
 
   const handleDoneRecipes = () => {
     const storagedDoneRecipes = localStorage.getItem('doneRecipes');
-    console.log('storagedDoneRecipes', storagedDoneRecipes);
     if (storagedDoneRecipes) {
       const parsedStorage = JSON.parse(storagedDoneRecipes);
       const filterFoods = parsedStorage.filter((el) => el.type.includes('food'));
@@ -24,7 +23,6 @@ const DoneRecipes = () => {
 
   const handleFavoriteRecipes = () => {
     const storagedFavoriteRecipes = localStorage.getItem('favoriteRecipes');
-    console.log('storagedFavoriteRecipes', storagedFavoriteRecipes);
     if (storagedFavoriteRecipes) {
       const parsedStorage = JSON.parse(storagedFavoriteRecipes);
       const filterFoods = parsedStorage.filter((el) => el.type.includes('food'));
@@ -42,8 +40,6 @@ const DoneRecipes = () => {
       handleFavoriteRecipes();
     }
   }, []);
-
-  console.log('allstate', allState);
 
   return (
     <>
@@ -72,8 +68,13 @@ const DoneRecipes = () => {
       </nav>
       <section>
         {
-          allState.map((recipe, index) => (
-            <DoneRecipeCard key={ recipe.name } recipe={ recipe } index={ index } />
+          allState && allState.map((recipe, index) => (
+            <DoneAndFavoriteRecipeCard
+              key={ recipe.name }
+              recipe={ recipe }
+              index={ index }
+              setAllState={ setAllState }
+            />
           ))
         }
       </section>
@@ -81,4 +82,4 @@ const DoneRecipes = () => {
   );
 };
 
-export default DoneRecipes;
+export default DoneAndFavoriteRecipes;
