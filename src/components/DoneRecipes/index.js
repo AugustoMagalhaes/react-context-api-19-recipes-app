@@ -28,18 +28,21 @@ const DoneRecipes = () => {
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          onClick={ () => setAllState([...foodState, ...drinkState]) }
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-food-btn"
+          onClick={ () => setAllState([...foodState]) }
         >
           Foods
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          onClick={ () => setAllState([...drinkState]) }
         >
           Drinks
         </button>
