@@ -1,0 +1,10 @@
+.containerNat {
+  display: flex;
+  justify-content: space-around;
+}
+
+.containerNat select {
+  border-radius: 5px;
+  margin-top: 15px;
+  width: 10em;
+}

@@ -98,6 +98,7 @@ const DrinkDetailsCard = ({ drink }) => {
           />
         </button>
       </div>
+
       <Ingredients recipe={ drink } setDisabledFinish={ setDisabledFinish } />
 
       <section>

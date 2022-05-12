@@ -15,20 +15,22 @@ function ExploreDrinksScreen({ history }) {
   return (
     <div>
       <Header pageTitle={ pageTitle } hasSearch={ false } />
-      <button
-        type="button"
-        data-testid="explore-by-ingredient"
-        onClick={ () => history.push('/explore/drinks/ingredients') }
-      >
-        By Ingredient
-      </button>
-      <button
-        type="button"
-        data-testid="explore-surprise"
-        onClick={ click }
-      >
-        Surprise me!
-      </button>
+      <section className="containerExplore">
+        <button
+          type="button"
+          data-testid="explore-by-ingredient"
+          onClick={ () => history.push('/explore/drinks/ingredients') }
+        >
+          By Ingredient
+        </button>
+        <button
+          type="button"
+          data-testid="explore-surprise"
+          onClick={ click }
+        >
+          Surprise me!
+        </button>
+      </section>
       <Footer />
     </div>
   );

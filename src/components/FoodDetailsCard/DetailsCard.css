@@ -8,7 +8,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
 }
 
 .meal-img {
@@ -16,7 +15,31 @@ body {
   width: 350px;
 }
 
+.container-details h3 {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.category-icons {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  width: 55%;
+}
+
+.category-icons p {
+  margin-bottom: 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 20px;
+}
+
 .buttons button {
+  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -40,14 +63,33 @@ body {
   width: 180px;
 }
 
+@keyframes animation {
+
+  from { background-color: rgb(219, 216, 216);}
+
+  to { background-color: #fd7e14;}
+
+}
+
 .startBtn {
+  border-radius: 5px;
   bottom: 0;
   margin-top: 100px;
   position: fixed;
+}
+
+.startBtn:hover {
+  animation-duration: 2s;
+  animation-name: animation;
 }
 
 .finishBtn {
   bottom: 0;
   margin-top: 100px;
   position: fixed;
+}
+
+.finishBtn:hover {
+  animation-duration: 2s;
+  animation-name: animation;
 }

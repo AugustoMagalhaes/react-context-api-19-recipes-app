@@ -6,14 +6,18 @@ body {
 
 .header {
   align-items: center;
-  background-color: #e5e5e5;
+  background-color: rgb(255, 105, 0);
   display: flex;
   justify-content: space-around;
   min-height: 80px;
 }
 
 .header img {
-  width: 50px;
+  width: 40px;
+}
+
+.header h1 {
+  font-size: x-large;
 }
 
 .search-btn {
