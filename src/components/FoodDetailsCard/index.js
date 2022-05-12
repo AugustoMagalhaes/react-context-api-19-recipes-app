@@ -93,6 +93,7 @@ const FoodDetailsCard = ({ food }) => {
           />
         </button>
       </div>
+
       <Ingredients recipe={ food } setDisabledFinish={ setDisabledFinish } />
 
       <section>
