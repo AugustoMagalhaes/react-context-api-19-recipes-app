@@ -22,7 +22,6 @@ export default function SearchBar({ displaySearchBar }) {
   const location = useLocation();
 
   const getFoods = async () => {
-    // tentar otimizar esses if's;
     if (searchRadio === 'name') {
       const receivedProducts = await getFoodsByName(searchInput);
       setReceivedFoods(receivedProducts);

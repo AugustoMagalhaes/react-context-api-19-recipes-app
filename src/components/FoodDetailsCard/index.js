@@ -12,6 +12,7 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import Recommended from '../Recommended';
 import handleFavorites from '../../helpers/handleFavorites';
+import { sendToStorage } from '../../helpers/handleFinishedRecipes';
 
 const FoodDetailsCard = ({ food }) => {
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
@@ -19,8 +20,6 @@ const FoodDetailsCard = ({ food }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [disabledFinish, setDisabledFinish] = useState(true);
-
-  console.log('disabledd ', disabledFinish);
 
   const { id } = useParams();
   const history = useHistory();
@@ -45,13 +44,13 @@ const FoodDetailsCard = ({ food }) => {
   };
 
   const headToFinish = () => {
+    sendToStorage(food);
     setIsDoneRecipe(true);
     history.push('/done-recipes');
   };
 
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
-    console.log('urlink', urlLink);
     clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
@@ -68,33 +67,33 @@ const FoodDetailsCard = ({ food }) => {
         titleTestId="recipe-title"
         imgTestId="recipe-photo"
       />
-      <div className="category-icons">
-        <p data-testid="recipe-category">
-          {food.strCategory}
-        </p>
-        <div className="buttons">
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ copyShareLink }
-          >
-            <img src={ shareIcon } alt="Share Recipe" />
-          </button>
-          {
-            isCopied && <p>Link copied!</p>
-          }
-          <button
-            type="button"
-            onClick={ () => handleFavorites(food, setIsFavorite) }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
-            />
-          </button>
-        </div>
+
+      <p data-testid="recipe-category">
+        {food.strCategory}
+      </p>
+      <div className="buttons">
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ copyShareLink }
+        >
+          <img src={ shareIcon } alt="Share Recipe" />
+        </button>
+        {
+          isCopied && <p>Link copied!</p>
+        }
+        <button
+          type="button"
+          onClick={ () => handleFavorites(food, setIsFavorite) }
+        >
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+            alt={ isFavorite ? 'Favoritado' : 'Não favoritado' }
+          />
+        </button>
       </div>
+
       <Ingredients recipe={ food } setDisabledFinish={ setDisabledFinish } />
 
       <section>

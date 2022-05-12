@@ -6,7 +6,6 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients,
   measures, setDisabledFinish }) => {
   const [checked, setChecked] = useState([]);
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  console.log('sl check', selectedCheckboxes);
 
   useEffect(() => {
     if (selectedCheckboxes.length === 0) {
@@ -22,14 +21,12 @@ const IngredientCheckbox = ({ id, recipeKind, ingredients,
     if (selectedCheckboxes && ingredients) {
       const newChecked = ingredients
         .map((el) => selectedCheckboxes.includes(el.ingredient));
-      console.log('new checked ', newChecked);
       setChecked(newChecked);
     }
   }, [selectedCheckboxes]);
 
   useEffect(() => {
     const checkFullChecked = checked.some((el) => el === false);
-    console.log('check full ', checkFullChecked);
     setDisabledFinish(checkFullChecked);
   }, [checked]);
 

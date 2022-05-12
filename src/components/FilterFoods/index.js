@@ -7,16 +7,10 @@ import FilterFoodsDropdown from './FilterFoodsDropdown';
 
 function FilterFoods() {
   const {
-    // receivedCategoryFoods,
     setReceivedCategoryFoods,
-    // setReceivedFoods,
-    // setSearchFoodsByCategory,
-    // selectedFilter,
-    // setSelectedFilter,
   } = useContext(Context);
   const location = useLocation();
   const { pathname } = location;
-  // const maxFilter = 5;
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -28,36 +22,6 @@ function FilterFoods() {
     };
     fetchRecipe();
   }, [setReceivedCategoryFoods]);
-
-  // const filterButton = async (category) => {
-  //   if (selectedFilter !== category) {
-  //     setSelectedFilter(category);
-  //     setSearchFoodsByCategory(true);
-  //     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     const { meals } = data;
-  //     setReceivedFoods(meals);
-  //   }
-  //   if (selectedFilter === category) {
-  //     setSearchFoodsByCategory(false);
-  //     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     const { meals } = data;
-  //     setReceivedFoods(meals);
-  //     setSelectedFilter('');
-  //   }
-  // };
-
-  // const buttonAll = async () => {
-  //   const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //   const response = await fetch(url);
-  //   const data = await response.json();
-  //   const { meals } = data;
-  //   setReceivedFoods(meals);
-  //   setSelectedFilter('');
-  // };
 
   return (
     pathname.includes('explore/foods/nationalities')

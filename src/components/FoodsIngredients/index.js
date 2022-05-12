@@ -26,7 +26,6 @@ function FoodsIngredients() {
     const { meals } = data;
     setReceivedFoods(meals);
     history.push('/foods');
-    console.log('Api ingrediente');
   };
 
   return (

@@ -1,20 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Context from '../../context/Context';
 import './FilterFoods.css';
-// import { useLocation } from 'react-router-dom';
 
 function FilterFoodsDropdown() {
   const {
     receivedCategoryFoods,
     setReceivedCategoryFoods,
     setReceivedFoods,
-    receivedFoods,
-    // setSearchFoodsByCategory,
-    // selectedFilter,
-    // setSelectedFilter,
   } = useContext(Context);
-  // const location = useLocation();
-  // const { pathname } = location;
   const [selectedCategory, setSelectedCategory] = useState('');
   const maxFilter = 5;
 
@@ -36,7 +29,6 @@ function FilterFoodsDropdown() {
         const response = await fetch(url);
         const data = await response.json();
         const { meals } = data;
-        console.log(meals);
         setReceivedFoods(meals);
         // setSelectedFilter('');
       }
@@ -50,9 +42,6 @@ function FilterFoodsDropdown() {
     };
     fetchApi();
   }, [selectedCategory]);
-
-  console.log(selectedCategory);
-  console.log(receivedFoods);
 
   return (
     <div>

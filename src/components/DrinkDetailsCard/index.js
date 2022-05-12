@@ -12,6 +12,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import Ingredients from '../Ingredients';
 import Recommended from '../Recommended';
 import handleFavorites from '../../helpers/handleFavorites';
+import { sendToStorage } from '../../helpers/handleFinishedRecipes';
 
 const DrinkDetailsCard = ({ drink }) => {
   const [isDoneRecipe, setIsDoneRecipe] = useState(false);
@@ -43,13 +44,13 @@ const DrinkDetailsCard = ({ drink }) => {
   };
 
   const headToFinish = () => {
+    sendToStorage(drink);
     setIsDoneRecipe(true);
     history.push('/done-recipes');
   };
 
   const copyShareLink = () => {
     const urlLink = window.location.href.replace(`/${IN_PROGRESS}`, '');
-    console.log('urlink', urlLink);
     clipboardCopy(urlLink);
     setIsCopied(true);
     const threeSeconds = 3000;
@@ -67,37 +68,37 @@ const DrinkDetailsCard = ({ drink }) => {
         imgTestId="recipe-photo"
         className="cocktail"
       />
-      <div className="category-icons">
-        <p data-testid="recipe-category">
-          {drink.strCategory}
-          {' '}
-          {'('}
-          {drink.strAlcoholic}
-          {')'}
-        </p>
-        <div className="buttons">
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => copyShareLink() }
-          >
-            <img src={ shareIcon } alt="Share Recipe" />
-          </button>
-          {
-            isCopied && <p>Link copied!</p>
-          }
-          <button
-            type="button"
-            onClick={ () => handleFavorites(drink, setIsFavorite) }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
-            />
-          </button>
-        </div>
+
+      <p data-testid="recipe-category">
+        {drink.strCategory}
+        {' '}
+        {'('}
+        {drink.strAlcoholic}
+        {')'}
+      </p>
+      <div className="buttons">
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => copyShareLink() }
+        >
+          <img src={ shareIcon } alt="Share Recipe" />
+        </button>
+        {
+          isCopied && <p>Link copied!</p>
+        }
+        <button
+          type="button"
+          onClick={ () => handleFavorites(drink, setIsFavorite) }
+        >
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+            alt={ isFavorite ? 'Favoritado' : 'Não favoritado' }
+          />
+        </button>
       </div>
+
       <Ingredients recipe={ drink } setDisabledFinish={ setDisabledFinish } />
 
       <section>
@@ -107,19 +108,6 @@ const DrinkDetailsCard = ({ drink }) => {
           {drink.strInstructions}
         </article>
       </section>
-
-      {/* <section>
-        <h4>Video</h4>
-        <iframe
-          data-testid="video"
-          width={ 600 }
-          height={ 400 }
-          title={ `${drink.strDrink}'s video` }
-          src={ drink.strYoutube }
-          frameBorder="0"
-          allowFullScreen
-        />
-      </section> */}
 
       <section className="carosel">
         <Recommended recipeKind="drink" />

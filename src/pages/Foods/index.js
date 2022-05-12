@@ -28,7 +28,6 @@ function FoodsScreen() {
       const data = await response.json();
       const { meals } = data;
       setReceivedFoods(meals);
-      console.log('Api inicial');
     };
     if (receivedFoods.length === 0) {
       fetchRecipe();
