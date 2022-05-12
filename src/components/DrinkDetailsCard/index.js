@@ -94,7 +94,7 @@ const DrinkDetailsCard = ({ drink }) => {
           <img
             data-testid="favorite-btn"
             src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-            alt={ isFavorite ? 'Não favoritado' : 'Favoritado' }
+            alt={ isFavorite ? 'Favoritado' : 'Não favoritado' }
           />
         </button>
       </div>
